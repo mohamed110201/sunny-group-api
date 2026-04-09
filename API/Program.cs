@@ -13,7 +13,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseStaticFiles();
 app.UseForwardedHeaders();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var summaries = new[]
 {
