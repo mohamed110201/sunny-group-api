@@ -11,7 +11,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseStaticFiles();
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 
 var summaries = new[]
