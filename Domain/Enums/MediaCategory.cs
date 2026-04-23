@@ -1,6 +1,8 @@
 namespace Domain.Enums;
 
-public class MediaCategory
+public enum MediaCategory
 {
-    
+    Cover,
+    Gallery,
+    Video
 }

@@ -1,6 +1,6 @@
+using Application.Common;
+using MediatR;
+
 namespace Application.Projects.Commands.DeleteAttraction;
 
-public class DeleteAttractionCommand
-{
-    
-}
+public record DeleteAttractionCommand(int ProjectId, int AttractionId) : IRequest<Result>;

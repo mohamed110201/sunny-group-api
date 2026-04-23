@@ -3,8 +3,4 @@ using MediatR;
 
 namespace Application.Projects.Commands.DeleteProjectMedia;
 
-public class DeleteProjectMediaCommandHandler
-{
-    public record DeleteProjectMediaCommand(int ProjectId, int MediaId) : IRequest<Result>;
-
-}
+public record DeleteProjectMediaCommand(int ProjectId, int MediaId) : IRequest<Result>;

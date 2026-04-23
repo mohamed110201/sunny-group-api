@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Application.Projects.Dtos;
 
-public record AttractionRequest(
+public record AttractionRequestDto(
     LocalizedText Name,
     int TimeInMinutes,
     IFormFile Icon

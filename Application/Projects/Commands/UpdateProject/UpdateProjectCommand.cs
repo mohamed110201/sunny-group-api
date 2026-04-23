@@ -1,6 +1,21 @@
+using Application.Common;
+using Domain.Enums;
+using Domain.ValueObjects;
+using MediatR;
+
 namespace Application.Projects.Commands.UpdateProject;
 
-public class UpdateProjectCommand
+public class UpdateProjectCommand :IRequest<Result>
 {
-    
+    public int Id { get; set; }
+    public LocalizedText Name { get; set; } = null!;
+    public LocalizedText Description { get; set; } = null!;
+    public int YearOfConstruction { get; set; }
+    public int NumberOfVillas { get; set; }
+    public int NumberOfApartments { get; set; }
+    public double Area { get; set; }
+    public LocalizedText Location { get; set; } = null!;
+    public ProjectStatus Status { get; set; }
+    public List<ProjectType> Types { get; set; } = [];
+    public PriceRange PriceRange { get; set; } = null!;
 }

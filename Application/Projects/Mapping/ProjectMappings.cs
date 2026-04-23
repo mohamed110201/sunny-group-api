@@ -1,6 +1,62 @@
+using Application.Projects.Dtos;
+using Domain.Entities.Projects;
+using Domain.Enums;
+
 namespace Application.Projects.Mapping;
 
-public class ProjectMappings
+public static class ProjectMappings
 {
-    
+    public static GetAllProjectsDto ToGetAllDto(this Project project) => new()
+    {
+        Id = project.Id,
+        Name = project.Name,
+        Description = project.Description,
+        YearOfConstruction = project.YearOfConstruction,
+        NumberOfVillas = project.NumberOfVillas,
+        NumberOfApartments = project.NumberOfApartments,
+        TotalUnits = project.TotalUnits,
+        Area = project.Area,
+        Location = project.Location,
+        Status = project.Status,
+        Types = project.Types,
+        PriceRange = project.PriceRange,
+        CoverImage = project.Media
+            .Where(m => m.Category == MediaCategory.Cover)
+            .Select(m => m.ToDto())
+            .FirstOrDefault()!
+    };
+
+    public static GetProjectByIdDto ToGetByIdDto(this Project project) => new()
+    {
+        Id = project.Id,
+        Name = project.Name,
+        Description = project.Description,
+        YearOfConstruction = project.YearOfConstruction,
+        NumberOfVillas = project.NumberOfVillas,
+        NumberOfApartments = project.NumberOfApartments,
+        TotalUnits = project.TotalUnits,
+        Area = project.Area,
+        Location = project.Location,
+        Status = project.Status,
+        Types = project.Types,
+        PriceRange = project.PriceRange,
+        Media = project.Media.Select(m => m.ToDto()).ToList(),
+        Attractions = project.Attractions
+            .Select(a => a.ToDto())
+            .ToList()
+    };
+
+    public static ProjectMediaResponseDto ToDto(this ProjectMedia media) => new()
+    {
+        Id = media.Id,
+        Url = media.Url,
+        Category = media.Category
+    };
+    public static AttractionResponseDto ToDto(this Attraction attraction) => new()
+    {
+        Id = attraction.Id,
+        Name = attraction.Name,
+        TimeInMinutes = attraction.TimeInMinutes,
+        IconUrl = attraction.IconUrl
+    };
 }
