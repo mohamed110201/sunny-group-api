@@ -28,22 +28,28 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddOpenApi();
 var app = builder.Build();
 
-// if (app.Environment.IsDevelopment())
-// {
+ if (app.Environment.IsDevelopment())
+ {
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Sunny Group API ");
     });
-//}
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        builder.Configuration["MediaStorage:BasePath"]!),
-    RequestPath = "/media"
-});
+}
+ var mediaPath = builder.Configuration["MediaStorage:BasePath"]!;
+
+ if (!Directory.Exists(mediaPath))
+     Directory.CreateDirectory(mediaPath);
+
+ app.UseStaticFiles(new StaticFileOptions
+ {
+     FileProvider = new PhysicalFileProvider(mediaPath),
+     RequestPath = "/media"
+ });
+
 app.UseForwardedHeaders();
-//app.UseMiddleware<ExceptionHandlingMiddleware>();
+if (!app.Environment.IsDevelopment())
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 //app.UseHttpsRedirection();
 

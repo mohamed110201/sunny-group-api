@@ -1,6 +1,7 @@
 using Application.Common;
 using Application.Common.Behaviors;
 using Domain.Entities.Projects;
+using Domain.Enums;
 using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -29,7 +30,13 @@ public class AddProjectMediaCommandHandler : IRequestHandler<AddProjectMediaComm
 
         if (project is null)
             return Result.Failure("Project.NotFound", "Project not found", 404);
+        var incomingCovers = request.Images.Count(i => i.Category == MediaCategory.Cover);
 
+        if (incomingCovers > 1)
+            return Result.Failure("Media.InvalidCover", "Only one cover image is allowed", 400);
+
+        if (incomingCovers == 1 && project.Media.Any(m => m.Category == MediaCategory.Cover))
+            return Result.Failure("Media.CoverExists", "Project already has a cover image. Delete it first before adding a new one", 400);
         foreach (var item in request.Images)
         {
             var url = await _mediaStorage.SaveAsync(
