@@ -1,13 +1,15 @@
 using Application.Common.Behaviors;
+using Application.Common.Options;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
 public static class DependencyInjectionRegister
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services ,IConfiguration configuration)
     {
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(DependencyInjectionRegister).Assembly));
@@ -17,7 +19,8 @@ public static class DependencyInjectionRegister
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
-
+        services.Configure<MediaValidationOptions>(
+            options => configuration.GetSection("MediaValidation").Bind(options));
         return services;
     }
 }

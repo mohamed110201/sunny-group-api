@@ -3,6 +3,7 @@ using API.Filters;
 using API.Middleware;
 using Application;
 using infrastructure;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,10 +23,17 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddApplication();
+builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddOpenApi();
+{
+    var maxRequestBodySize = builder.Configuration
+        .GetValue<long>("UploadSettings:MaxRequestBodySizeInMB");
+    builder.WebHost.ConfigureKestrel(options => { options.Limits.MaxRequestBodySize = maxRequestBodySize* 1024 * 1024; });
+    builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = maxRequestBodySize* 1024 * 1024; });
+}
+
 var app = builder.Build();
 
  if (app.Environment.IsDevelopment())
