@@ -3,6 +3,7 @@ using Domain.Entities.Projects;
 using Domain.Enums;
 using Domain.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Projects.Commands.CreateProject;
 
@@ -10,13 +11,17 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 {
     private readonly IProjectRepository _projectRepository;
     private readonly IMediaStorageService _mediaStorage;
+    private readonly IMemoryCache _cache;
+
 
     public CreateProjectCommandHandler(
         IProjectRepository projectRepository,
-        IMediaStorageService mediaStorage)
+        IMediaStorageService mediaStorage,
+        IMemoryCache cache)
     {
         _projectRepository = projectRepository;
         _mediaStorage = mediaStorage;
+        _cache = cache;
     }
 
     public async Task<Result<int>> Handle(
@@ -40,7 +45,8 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
         await _projectRepository.AddAsync(project, cancellationToken);
         
         await _projectRepository.UpdateAsync(project, cancellationToken);
-
+        _cache.Remove("projects-all");
+        _cache.Remove($"projects-{project.Id}");
         return Result<int>.Success(project.Id);
     }
 }

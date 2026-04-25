@@ -2,16 +2,21 @@ using Application.Common;
 using Domain.Enums;
 using Domain.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Projects.Commands.UpdateProject;
 
 public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand, Result>
 {
     private readonly IProjectRepository _projectRepository;
+    private readonly IMemoryCache _cache;
 
-    public UpdateProjectCommandHandler(IProjectRepository projectRepository)
+
+    public UpdateProjectCommandHandler(IProjectRepository projectRepository
+    , IMemoryCache cache)
     {
         _projectRepository = projectRepository;
+        _cache = cache;
     }
 
     public async Task<Result> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -34,7 +39,8 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
         project.PriceRange = request.PriceRange;
 
         await _projectRepository.UpdateAsync(project, cancellationToken);
-
+        _cache.Remove("projects-all");
+        _cache.Remove($"projects-{project.Id}");
         return Result.Success();
     }
 }
