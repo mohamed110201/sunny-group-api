@@ -17,7 +17,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            export DOTNET_ROOT=$HOME/.dotnet
+            export PATH=$PATH:$HOME/.dotnet
             cd /var/www/sunny-group-api
             git pull
-            dotnet publish API -c Release -o /var/www/sunny-group-api/publish
+            /root/.dotnet/dotnet publish API -c Release -o /var/www/sunny-group-api/publish
             systemctl restart sunnygroup-api
