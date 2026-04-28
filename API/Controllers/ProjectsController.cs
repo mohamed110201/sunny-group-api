@@ -1,5 +1,6 @@
 using API.Common;
 using API.Common.JSend;
+using API.Extensions;
 using Application.Projects.Commands.AddAttraction;
 using Application.Projects.Commands.AddProjectMedia;
 using Application.Projects.Commands.CreateProject;
@@ -78,18 +79,7 @@ public class ProjectsController : BaseController
                 error : "Images and Categories count must match."
             );
         }
-        var command = new AddProjectMediaCommand
-        {
-            ProjectId = id,
-            Images = form.Images
-                .Select((img, i) => new ProjectMediaRequestDto
-                {
-                    Image = img,
-                    Category = form.Categories[i]
-                })
-                .ToList()
-        };
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(form.ToCommand(id), cancellationToken);
         return HandleResult(result);
     }
 

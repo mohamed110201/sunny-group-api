@@ -1,3 +1,4 @@
+using Application.Units.Dtos;
 using Domain.Enums;
 using Domain.ValueObjects;
 
@@ -19,5 +20,6 @@ public class GetProjectByIdDto
     public PriceRange PriceRange { get; set; } = null!;
     public List<ProjectMediaResponseDto> Media { get; set; } = [];
     public List<AttractionResponseDto> Attractions { get; set; } = [];
+    public List<GetAllUnitsDto> Units { get; set; } = [];
 
 }

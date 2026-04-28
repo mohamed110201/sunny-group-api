@@ -1,7 +1,7 @@
-using Application.Common.Behaviors;
 using Domain.Interfaces;
 using infrastructure.Persistence;
 using infrastructure.Repositories;
+using Infrastructure.Repositories;
 using infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddMemoryCache();
 
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IUnitRepository, UnitRepository>();
         services.AddScoped<IMediaStorageService, MediaStorageService>();
         return services;
     }

@@ -1,1 +1,102 @@
-// Placeholder for units controller
+using Application.Units.Commands.AddUnitMedia;
+using Application.Units.Commands.CreateUnit;
+using Application.Units.Commands.DeleteUnit;
+using Application.Units.Commands.DeleteUnitMedia;
+using Application.Units.Commands.UpdateUnit;
+using Application.Units.Queries.GetUnitById;
+using Application.Units.Queries.GetUnitsByProjectId;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using API.Common;
+using API.Common.JSend;
+using API.Extensions;
+using Application.Units.Dtos;
+
+namespace API.Controllers;
+
+[Route("projects/{projectId}/units")]
+public class UnitsController : BaseController
+{
+    private readonly IMediator _mediator;
+
+    public UnitsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll(int projectId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetUnitsByProjectIdQuery(projectId), cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpGet("{unitId}")]
+    public async Task<IActionResult> GetById(int projectId, int unitId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetUnitByIdQuery(projectId, unitId), cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(
+        int projectId,
+        [FromBody] CreateUnitCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.ProjectId = projectId;
+        var result = await _mediator.Send(command, cancellationToken);
+        return HandleResult(result, created: true);
+    }
+
+    [HttpPut("{unitId}")]
+    public async Task<IActionResult> Update(
+        int projectId,
+        int unitId,
+        [FromBody] UpdateUnitCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.Id = unitId;
+        command.ProjectId = projectId;
+        var result = await _mediator.Send(command, cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("{unitId}")]
+    public async Task<IActionResult> Delete(
+        int projectId,
+        int unitId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteUnitCommand(projectId, unitId), cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpPost("{unitId}/media")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> AddMedia(
+        int projectId,
+        int unitId,
+        [FromForm] AddUnitMediaForm form,
+        CancellationToken cancellationToken)
+    {
+        if (form.Images.Count != form.Categories.Count ||
+            form.Images.Count != form.SubCategories.Count)
+            return JSendHelper.BadRequest(error: "Images, Categories and SubCategories count must match.");
+
+        var result = await _mediator.Send(form.ToCommand(projectId, unitId), cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("{unitId}/media/{mediaId}")]
+    public async Task<IActionResult> DeleteMedia(
+        int projectId,
+        int unitId,
+        int mediaId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new DeleteUnitMediaCommand(projectId, unitId, mediaId), cancellationToken);
+        return HandleResult(result);
+    }
+}

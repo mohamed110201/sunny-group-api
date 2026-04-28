@@ -26,13 +26,25 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
         if (project is null)
             return Result.Failure("Project.NotFound", "Project not found", 404);
 
-        project.Name = request.Name;
-        project.Description = request.Description;
+        project.Name.Arabic = request.Name.Arabic ?? project.Name.Arabic;
+        project.Name.English = request.Name.English;
+        project.Name.Italian = request.Name.Italian ?? project.Name.Italian;
+        project.Name.Russian = request.Name.Russian ?? project.Name.Russian;
+
+        project.Description.Arabic = request.Description.Arabic ?? project.Description.Arabic;
+        project.Description.English = request.Description.English;
+        project.Description.Italian = request.Description.Italian ?? project.Description.Italian;
+        project.Description.Russian = request.Description.Russian ?? project.Description.Russian;
+
+        project.Location.Arabic = request.Location.Arabic ?? project.Location.Arabic;
+        project.Location.English = request.Location.English;
+        project.Location.Italian = request.Location.Italian ?? project.Location.Italian;
+        project.Location.Russian = request.Location.Russian ?? project.Location.Russian;
+        
         project.YearOfConstruction = request.YearOfConstruction;
         project.NumberOfVillas = request.NumberOfVillas;
         project.NumberOfApartments = request.NumberOfApartments;
         project.Area = request.Area;
-        project.Location = request.Location;
         project.Status = request.Status;
         project.Types = request.Types;
        

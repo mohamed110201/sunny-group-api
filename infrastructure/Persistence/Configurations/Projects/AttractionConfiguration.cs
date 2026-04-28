@@ -2,7 +2,7 @@ using Domain.Entities.Projects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace infrastructure.Persistence.Configurations;
+namespace infrastructure.Persistence.Configurations.Projects;
 
 public class AttractionConfiguration : IEntityTypeConfiguration<Attraction>
 {

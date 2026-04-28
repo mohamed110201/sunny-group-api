@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace infrastructure.Persistence.Configurations;
+namespace infrastructure.Persistence.Configurations.Projects;
 
 public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {

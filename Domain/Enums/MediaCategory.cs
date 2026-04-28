@@ -4,5 +4,6 @@ public enum MediaCategory
 {
     Cover,
     Gallery,
-    Video
+    Video,
+    Inventory
 }

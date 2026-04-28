@@ -1,4 +1,5 @@
 using Application.Projects.Dtos;
+using Application.Units.Mapping;
 using Domain.Entities.Projects;
 using Domain.Enums;
 
@@ -43,16 +44,17 @@ public static class ProjectMappings
         Media = project.Media.Select(m => m.ToDto()).ToList(),
         Attractions = project.Attractions
             .Select(a => a.ToDto())
-            .ToList()
+            .ToList(),
+        Units = project.Units.Select(u=>u.ToGetAllDto()).ToList()
     };
 
-    public static ProjectMediaResponseDto ToDto(this ProjectMedia media) => new()
+    private static ProjectMediaResponseDto ToDto(this ProjectMedia media) => new()
     {
         Id = media.Id,
         Url = media.Url,
         Category = media.Category
     };
-    public static AttractionResponseDto ToDto(this Attraction attraction) => new()
+    private static AttractionResponseDto ToDto(this Attraction attraction) => new()
     {
         Id = attraction.Id,
         Name = attraction.Name,

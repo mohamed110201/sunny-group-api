@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<ProjectMedia> ProjectMedia => Set<ProjectMedia>();
     public DbSet<Attraction> Attractions => Set<Attraction>();
     public DbSet<Unit> Units => Set<Unit>();
+    public DbSet<UnitMedia> UnitMedia => Set<UnitMedia>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

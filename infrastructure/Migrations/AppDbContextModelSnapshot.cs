@@ -112,14 +112,66 @@ namespace infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Area")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<double>("ROI")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Rooms")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Units.UnitMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubCategory")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("UnitMedia", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Projects.Attraction", b =>
@@ -136,7 +188,6 @@ namespace infrastructure.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Arabic")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_ar");
 
@@ -146,12 +197,10 @@ namespace infrastructure.Migrations
                                 .HasColumnName("name_en");
 
                             b1.Property<string>("Italian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_it");
 
                             b1.Property<string>("Russian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_ru");
 
@@ -177,7 +226,6 @@ namespace infrastructure.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Arabic")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("description_ar");
 
@@ -187,12 +235,10 @@ namespace infrastructure.Migrations
                                 .HasColumnName("description_en");
 
                             b1.Property<string>("Italian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("description_it");
 
                             b1.Property<string>("Russian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("description_ru");
 
@@ -210,7 +256,6 @@ namespace infrastructure.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Arabic")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("location_ar");
 
@@ -220,12 +265,10 @@ namespace infrastructure.Migrations
                                 .HasColumnName("location_en");
 
                             b1.Property<string>("Italian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("location_it");
 
                             b1.Property<string>("Russian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("location_ru");
 
@@ -243,7 +286,6 @@ namespace infrastructure.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Arabic")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_ar");
 
@@ -253,12 +295,10 @@ namespace infrastructure.Migrations
                                 .HasColumnName("name_en");
 
                             b1.Property<string>("Italian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_it");
 
                             b1.Property<string>("Russian")
-                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("name_ru");
 
@@ -323,7 +363,84 @@ namespace infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "Name", b1 =>
+                        {
+                            b1.Property<int>("UnitId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("name_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("name_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("name_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("name_ru");
+
+                            b1.HasKey("UnitId");
+
+                            b1.ToTable("Units");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UnitId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "PaymentPlan", b1 =>
+                        {
+                            b1.Property<int>("UnitId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("payment_plan_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("payment_plan_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("payment_plan_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("payment_plan_ru");
+
+                            b1.HasKey("UnitId");
+
+                            b1.ToTable("Units");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UnitId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+
+                    b.Navigation("PaymentPlan")
+                        .IsRequired();
+
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Units.UnitMedia", b =>
+                {
+                    b.HasOne("Domain.Entities.Units.Unit", "Unit")
+                        .WithMany("Media")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Domain.Entities.Projects.Project", b =>
@@ -333,6 +450,11 @@ namespace infrastructure.Migrations
                     b.Navigation("Media");
 
                     b.Navigation("Units");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Units.Unit", b =>
+                {
+                    b.Navigation("Media");
                 });
 #pragma warning restore 612, 618
         }
