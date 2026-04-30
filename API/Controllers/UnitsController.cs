@@ -9,8 +9,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
 using API.Common.JSend;
-using API.Extensions;
 using Application.Units.Dtos;
+using Application.Units.Queries.GetAllUnits;
 
 namespace API.Controllers;
 
@@ -23,14 +23,20 @@ public class UnitsController : BaseController
     {
         _mediator = mediator;
     }
-
+    [HttpGet("/units")]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetAllUnitsQuery(), cancellationToken);
+        return HandleResult(result);
+    }
+    
     [HttpGet]
-    public async Task<IActionResult> GetAll(int projectId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByProjectId(int projectId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetUnitsByProjectIdQuery(projectId), cancellationToken);
         return HandleResult(result);
     }
-
+    
     [HttpGet("{unitId}")]
     public async Task<IActionResult> GetById(int projectId, int unitId, CancellationToken cancellationToken)
     {
@@ -77,14 +83,13 @@ public class UnitsController : BaseController
     public async Task<IActionResult> AddMedia(
         int projectId,
         int unitId,
-        [FromForm] AddUnitMediaForm form,
+        [FromForm] AddUnitMediaCommand command,
         CancellationToken cancellationToken)
     {
-        if (form.Images.Count != form.Categories.Count ||
-            form.Images.Count != form.SubCategories.Count)
-            return JSendHelper.BadRequest(error: "Images, Categories and SubCategories count must match.");
-
-        var result = await _mediator.Send(form.ToCommand(projectId, unitId), cancellationToken);
+        
+        command.ProjectId = projectId;
+        command.UnitId = unitId;
+        var result = await _mediator.Send(command);
         return HandleResult(result);
     }
 
@@ -99,4 +104,5 @@ public class UnitsController : BaseController
             new DeleteUnitMediaCommand(projectId, unitId, mediaId), cancellationToken);
         return HandleResult(result);
     }
+
 }

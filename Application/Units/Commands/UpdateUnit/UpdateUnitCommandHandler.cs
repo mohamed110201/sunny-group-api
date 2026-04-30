@@ -49,7 +49,7 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove($"units-{request.Id}");
-
+        _cache.Remove("units-all");
         return Result.Success();
     }
 }

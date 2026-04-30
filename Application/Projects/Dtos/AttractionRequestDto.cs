@@ -8,3 +8,4 @@ public record AttractionRequestDto(
     int TimeInMinutes,
     IFormFile Icon
 );
+

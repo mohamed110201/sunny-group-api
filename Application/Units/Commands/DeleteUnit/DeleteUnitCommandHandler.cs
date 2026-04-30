@@ -37,7 +37,7 @@ public class DeleteUnitCommandHandler : IRequestHandler<DeleteUnitCommand, Resul
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove($"units-{request.UnitId}");
-
+        _cache.Remove("units-all");
         return Result.Success();
     }
 }

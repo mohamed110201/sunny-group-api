@@ -13,7 +13,13 @@ public class UnitRepository : IUnitRepository
     {
         db_context = context;
     }
-
+    public async Task<List<Unit>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await db_context.Units
+            .Include(u => u.Media)
+            .Include(u => u.Project)
+            .ToListAsync(cancellationToken);
+    }
     public async Task<List<Unit>> GetByProjectIdAsync(int projectId, CancellationToken cancellationToken = default)
     {
         return await db_context.Units

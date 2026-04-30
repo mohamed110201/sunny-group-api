@@ -48,7 +48,7 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
         await _unitRepository.AddAsync(unit, cancellationToken);
 
         _cache.Remove($"units-project-{request.ProjectId}");
-
+        _cache.Remove("units-all");
         return Result<int>.Success(unit.Id);
     }
 }

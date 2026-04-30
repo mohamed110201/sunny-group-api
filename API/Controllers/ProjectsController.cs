@@ -1,6 +1,5 @@
 using API.Common;
 using API.Common.JSend;
-using API.Extensions;
 using Application.Projects.Commands.AddAttraction;
 using Application.Projects.Commands.AddProjectMedia;
 using Application.Projects.Commands.CreateProject;
@@ -46,7 +45,9 @@ public class ProjectsController : BaseController
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return HandleResult(result, created: true);    }
+        return HandleResult(result, created: true);
+        
+    }
     
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(
@@ -70,16 +71,11 @@ public class ProjectsController : BaseController
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> AddMedia(
         int id,
-        [FromForm] AddProjectMediaForm form,
+        [FromForm] AddProjectMediaCommand command,
         CancellationToken cancellationToken)
     {
-        if (form.Images.Count != form.Categories.Count)
-        {
-            return JSendHelper.BadRequest(
-                error : "Images and Categories count must match."
-            );
-        }
-        var result = await _mediator.Send(form.ToCommand(id), cancellationToken);
+        command.ProjectId = id;
+        var result = await _mediator.Send(command, cancellationToken);
         return HandleResult(result);
     }
 
