@@ -9,8 +9,8 @@ public class GetAllUnitsDto
     public LocalizedText Name { get; set; } = null!;
     public int Area { get; set; }
     public int Rooms { get; set; }
-    public ProjectStatus Status { get; set; }
-    public UnitType Type { get; set; }
+    public LocalizedText  Status { get; set; }
+    public LocalizedText  Type { get; set; }
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public double ROI { get; set; }

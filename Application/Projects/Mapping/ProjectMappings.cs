@@ -1,3 +1,4 @@
+using Application.Common.Translations;
 using Application.Projects.Dtos;
 using Application.Units.Mapping;
 using Domain.Entities.Projects;
@@ -18,13 +19,13 @@ public static class ProjectMappings
         TotalUnits = project.TotalUnits,
         Area = project.Area,
         Location = project.Location,
-        Status = project.Status,
-        Types = project.Types,
+        Status = StatusTranslations.GetTranslation(project.Status),
+        Types = project.Types.Select(t => ProjectTypeTranslations.GetTranslation(t)).ToList(),
         PriceRange = project.PriceRange,
         CoverImage = project.Media
             .Where(m => m.Category == MediaCategory.Cover)
             .Select(m => m.ToDto())
-            .FirstOrDefault()!
+            .FirstOrDefault()!,
     };
 
     public static GetProjectByIdDto ToGetByIdDto(this Project project) => new()
@@ -38,8 +39,8 @@ public static class ProjectMappings
         TotalUnits = project.TotalUnits,
         Area = project.Area,
         Location = project.Location,
-        Status = project.Status,
-        Types = project.Types,
+        Status = StatusTranslations.GetTranslation(project.Status),
+        Types = project.Types.Select(t => ProjectTypeTranslations.GetTranslation(t)).ToList(),
         PriceRange = project.PriceRange,
         Media = project.Media.Select(m => m.ToDto()).ToList(),
         Attractions = project.Attractions

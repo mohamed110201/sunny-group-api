@@ -1,3 +1,4 @@
+using Application.Common.Translations;
 using Application.Units.Dtos;
 using Domain.Entities.Units;
 using Domain.Enums;
@@ -12,9 +13,8 @@ public static class UnitMappings
         Name = unit.Name,
         Area = unit.Area,
         Rooms = unit.Rooms,
-        Status = unit.Status,
-        Type = unit.Type,
-        Price = unit.Price,
+        Status = StatusTranslations.GetTranslation(unit.Status),
+        Type = UnitTypeTranslations.GetTranslation(unit.Type),        Price = unit.Price,
         Stock = unit.Stock,
         ROI = unit.ROI,
         CoverImage = unit.Media
@@ -29,8 +29,8 @@ public static class UnitMappings
         Name = unit.Name,
         Area = unit.Area,
         Rooms = unit.Rooms,
-        Status = unit.Status,
-        Type = unit.Type,
+        Status = StatusTranslations.GetTranslation(unit.Status),
+        Type = UnitTypeTranslations.GetTranslation(unit.Type),
         Price = unit.Price,
         Stock = unit.Stock,
         PaymentPlan = unit.PaymentPlan,
