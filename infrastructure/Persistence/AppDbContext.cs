@@ -1,3 +1,4 @@
+using Domain.Entities.inquiries;
 using Domain.Entities.Projects;
 using Domain.Entities.Units;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ namespace infrastructure.Persistence;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public DbSet<Inquiry> Inquiries => Set<Inquiry>();
 
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<ProjectMedia> ProjectMedia => Set<ProjectMedia>();
