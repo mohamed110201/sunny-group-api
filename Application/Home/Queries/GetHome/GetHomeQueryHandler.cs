@@ -40,9 +40,9 @@ public class GetHomeQueryHandler : IRequestHandler<GetHomeQuery, Result<HomeDto>
             VoiceOfCustomers = voices.Select(v => v.ToDto()).ToList(),
             Stats = new HomeStatsDto
             {
-                YearsOfExperience = settings?.CompanyFoundingYear is null
+                YearsOfExperience = settings is null || settings?.CompanyFoundingYear ==0
                     ? 0
-                    : DateTime.UtcNow.Year - settings.CompanyFoundingYear,
+                    : DateTime.UtcNow.Year - settings!.CompanyFoundingYear,
                 TotalProjects = projectsCount,
                 TotalUnits = unitsCount,
                 NumberOfClients = settings?.NumberOfClients ?? 0

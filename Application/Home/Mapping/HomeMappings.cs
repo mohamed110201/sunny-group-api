@@ -7,6 +7,7 @@ public static class HomeMapping
 {
     public static VoiceOfCustomerDto ToDto(this VoiceOfCustomer v) => new()
     {
+        Id =  v.Id,
         CustomerName = v.CustomerName,
         ProjectName = v.Project.Name,
         Comment = v.Comment
