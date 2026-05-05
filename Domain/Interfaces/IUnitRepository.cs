@@ -13,4 +13,6 @@ public interface IUnitRepository
     Task UpdateAsync(Unit unit, CancellationToken cancellationToken = default);
     Task DeleteAsync(Unit unit, CancellationToken cancellationToken = default);
     Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default);
+    Task<int> GetCount(CancellationToken cancellationToken = default);
+
 }

@@ -52,4 +52,9 @@ public class ProjectRepository : IProjectRepository
     {
         return await db_context.Projects.AnyAsync(p => p.Id == id, cancellationToken);
     }
+
+    public async Task<int> GetCount(CancellationToken cancellationToken = default)
+    {
+        return await db_context.Projects.CountAsync(cancellationToken);
+    }
 }

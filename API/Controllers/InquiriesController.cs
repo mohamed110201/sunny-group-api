@@ -29,7 +29,7 @@ public class InquiriesController : BaseController
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return HandleResult(result);    
+        return HandleResult(result,created:true);    
     }
 
     [HttpPatch("{id}/seen")]

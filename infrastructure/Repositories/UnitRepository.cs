@@ -57,4 +57,9 @@ public class UnitRepository : IUnitRepository
     {
         return await db_context.Units.AnyAsync(u => u.Id == id, cancellationToken);
     }
+
+    public async Task<int> GetCount(CancellationToken cancellationToken = default)
+    {
+        return await db_context.Units.CountAsync(cancellationToken);
+    }
 }
