@@ -1,3 +1,5 @@
+using Domain.Entities.Blogs;
+using Domain.Entities.Home;
 using Domain.Entities.inquiries;
 using Domain.Entities.Projects;
 using Domain.Entities.Units;
@@ -15,6 +17,10 @@ public class AppDbContext : DbContext
     public DbSet<Attraction> Attractions => Set<Attraction>();
     public DbSet<Unit> Units => Set<Unit>();
     public DbSet<UnitMedia> UnitMedia => Set<UnitMedia>();
+    public DbSet<Blog> Blogs => Set<Blog>();
+    public DbSet<BlogMedia> BlogMedia => Set<BlogMedia>();
+    public DbSet<VoiceOfCustomer> VoiceOfCustomers => Set<VoiceOfCustomer>();
+    public DbSet<Settings> Settings => Set<Settings>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

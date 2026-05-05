@@ -22,7 +22,7 @@ public class BaseController : ControllerBase
             : JSendHelper.Success(data: result.Value);
     }
 
-    protected IActionResult HandleResult(Result result)
+    protected IActionResult HandleResult(Result result ,bool created = false)
     {
         if (!result.IsSuccess)
             return new JSendResponse(result.StatusCode, new JSendBody
@@ -31,7 +31,9 @@ public class BaseController : ControllerBase
                 Errors = result.Errors
             });
 
-        return JSendHelper.Deleted();
+        return created
+            ? JSendHelper.Created()
+            :JSendHelper.Deleted();
     }
     
 }

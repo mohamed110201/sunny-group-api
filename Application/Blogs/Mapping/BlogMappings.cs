@@ -1,0 +1,49 @@
+using Application.Blogs.Dtos;
+using Application.Common.Translations;
+using Domain.Entities.Blogs;
+using Domain.Enums;
+
+namespace Application.Blogs.Mapping;
+
+public static class BlogMappings
+{
+    public static GetAllBlogsDto ToGetAllDto(this Blog blog) => new()
+    {
+        Id = blog.Id,
+        Title = blog.Title,
+        Description = blog.Description,
+        Category = BlogCategoryTranslations.GetTranslation(blog.Category),
+        CreatedAt = blog.CreatedAt,
+        Cover = blog.Media
+            .Where(m => m.Category == MediaCategory.Cover)
+            .Select(m => m.ToDto())
+            .FirstOrDefault()
+    };
+
+    public static GetBlogByIdDto ToGetByIdDto(this Blog blog) => new()
+    {
+        Id = blog.Id,
+        Title = blog.Title,
+        Description = blog.Description,
+        Content = blog.Content,
+        Category = BlogCategoryTranslations.GetTranslation(blog.Category),
+        MetaTitle = blog.MetaTitle,
+        MetaDescription = blog.MetaDescription,
+        CreatedAt = blog.CreatedAt,
+        Cover = blog.Media
+            .Where(m => m.Category == MediaCategory.Cover)
+            .Select(m => m.ToDto())
+            .FirstOrDefault(),
+        Gallery = blog.Media
+            .Where(m => m.Category == MediaCategory.Gallery)
+            .Select(m => m.ToDto())
+            .ToList()
+    };
+
+    private static BlogMediaResponseDto ToDto(this BlogMedia media) => new()
+    {
+        Id = media.Id,
+        Url = media.Url,
+        Category = media.Category
+    };
+}

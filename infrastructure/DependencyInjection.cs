@@ -23,7 +23,9 @@ public static class DependencyInjection
         services.AddScoped<IUnitRepository, UnitRepository>();
         services.AddScoped<IMediaStorageService, MediaStorageService>();
         services.AddScoped<IInquiryRepository, InquiryRepository>();
-
+        services.AddScoped<IBlogRepository, BlogRepository>();
+        services.AddScoped<IVoiceOfCustomerRepository, VoiceOfCustomerRepository>();
+        services.AddScoped<ISettingsRepository, SettingsRepository>();
         return services;
     }
 }
