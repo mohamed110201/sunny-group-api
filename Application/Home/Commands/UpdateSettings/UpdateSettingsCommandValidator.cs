@@ -7,10 +7,10 @@ public class UpdateSettingsCommandValidator : AbstractValidator<UpdateSettingsCo
     public UpdateSettingsCommandValidator()
     {
         RuleFor(x => x.CompanyFoundingYear)
-            .GreaterThan(1900).WithMessage("Invalid founding year")
-            .LessThanOrEqualTo(DateTime.UtcNow.Year).WithMessage("Founding year cannot be in the future");
+            .GreaterThan(1900).When(x => x.CompanyFoundingYear.HasValue).WithMessage("Invalid founding year")
+            .LessThanOrEqualTo(DateTime.UtcNow.Year).When(x => x.CompanyFoundingYear.HasValue).WithMessage("Founding year cannot be in the future");
 
         RuleFor(x => x.NumberOfClients)
-            .GreaterThanOrEqualTo(0).WithMessage("Number of clients cannot be negative");
+            .GreaterThanOrEqualTo(0).When(x => x.NumberOfClients.HasValue).WithMessage("Number of clients cannot be negative");
     }
 }

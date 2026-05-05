@@ -30,15 +30,19 @@ public class UpdateSettingsCommandHandler : IRequestHandler<UpdateSettingsComman
         {
             settings = new Settings
             {
-                CompanyFoundingYear = request.CompanyFoundingYear,
-                NumberOfClients = request.NumberOfClients
+                CompanyFoundingYear = request.CompanyFoundingYear ?? 0,
+                NumberOfClients = request.NumberOfClients ?? 0
             };
             await _settingsRepository.AddAsync(settings, cancellationToken);
         }
         else
         {
-            settings.CompanyFoundingYear = request.CompanyFoundingYear;
-            settings.NumberOfClients = request.NumberOfClients;
+            if (request.CompanyFoundingYear.HasValue)
+                settings.CompanyFoundingYear = request.CompanyFoundingYear.Value;
+
+            if (request.NumberOfClients.HasValue)
+                settings.NumberOfClients = request.NumberOfClients.Value;
+
             await _settingsRepository.UpdateAsync(settings, cancellationToken);
         }
 

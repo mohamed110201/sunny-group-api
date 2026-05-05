@@ -31,18 +31,27 @@ public class UpdateVoiceOfCustomerCommandHandler : IRequestHandler<UpdateVoiceOf
         if (voiceOfCustomer is null)
             return Result.Failure("VoiceOfCustomer.NotFound", "Voice of customer not found", 404);
 
-        var projectExists = await _projectRepository
-            .ExistsAsync(request.ProjectId, cancellationToken);
+        if (request.ProjectId.HasValue)
+        {
+            var projectExists = await _projectRepository
+                .ExistsAsync(request.ProjectId.Value, cancellationToken);
 
-        if (!projectExists)
-            return Result.Failure("Project.NotFound", "Project not found", 404);
+            if (!projectExists)
+                return Result.Failure("Project.NotFound", "Project not found", 404);
 
-        voiceOfCustomer.CustomerName = request.CustomerName;
-        voiceOfCustomer.ProjectId = request.ProjectId;
-        voiceOfCustomer.Comment.English = request.Comment.English;
-        voiceOfCustomer.Comment.Arabic = request.Comment.Arabic ?? voiceOfCustomer.Comment.Arabic;
-        voiceOfCustomer.Comment.Italian = request.Comment.Italian ?? voiceOfCustomer.Comment.Italian;
-        voiceOfCustomer.Comment.Russian = request.Comment.Russian ?? voiceOfCustomer.Comment.Russian;
+            voiceOfCustomer.ProjectId = request.ProjectId.Value;
+        }
+
+        if (request.CustomerName != null)
+            voiceOfCustomer.CustomerName = request.CustomerName;
+
+        if (request.Comment != null)
+        {
+            voiceOfCustomer.Comment.English = request.Comment.English ?? voiceOfCustomer.Comment.English;
+            voiceOfCustomer.Comment.Arabic = request.Comment.Arabic ?? voiceOfCustomer.Comment.Arabic;
+            voiceOfCustomer.Comment.Italian = request.Comment.Italian ?? voiceOfCustomer.Comment.Italian;
+            voiceOfCustomer.Comment.Russian = request.Comment.Russian ?? voiceOfCustomer.Comment.Russian;
+        }
 
         await _voiceOfCustomerRepository.UpdateAsync(voiceOfCustomer, cancellationToken);
         _cache.Remove("home");

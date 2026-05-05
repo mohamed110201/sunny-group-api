@@ -27,23 +27,42 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
         if (unit is null || unit.ProjectId != request.ProjectId)
             return Result.Failure("Unit.NotFound", "Unit not found", 404);
 
-        unit.Name.English = request.Name.English;
-        unit.Name.Arabic = request.Name.Arabic ?? unit.Name.Arabic;
-        unit.Name.Italian = request.Name.Italian ?? unit.Name.Italian;
-        unit.Name.Russian = request.Name.Russian ?? unit.Name.Russian;
+        if (request.Name != null)
+        {
+            unit.Name.English = request.Name.English ?? unit.Name.English;
+            unit.Name.Arabic = request.Name.Arabic ?? unit.Name.Arabic;
+            unit.Name.Italian = request.Name.Italian ?? unit.Name.Italian;
+            unit.Name.Russian = request.Name.Russian ?? unit.Name.Russian;
+        }
 
-        unit.PaymentPlan.English = request.PaymentPlan.English;
-        unit.PaymentPlan.Arabic = request.PaymentPlan.Arabic ?? unit.PaymentPlan.Arabic;
-        unit.PaymentPlan.Italian = request.PaymentPlan.Italian ?? unit.PaymentPlan.Italian;
-        unit.PaymentPlan.Russian = request.PaymentPlan.Russian ?? unit.PaymentPlan.Russian;
+        if (request.PaymentPlan != null)
+        {
+            unit.PaymentPlan.English = request.PaymentPlan.English ?? unit.PaymentPlan.English;
+            unit.PaymentPlan.Arabic = request.PaymentPlan.Arabic ?? unit.PaymentPlan.Arabic;
+            unit.PaymentPlan.Italian = request.PaymentPlan.Italian ?? unit.PaymentPlan.Italian;
+            unit.PaymentPlan.Russian = request.PaymentPlan.Russian ?? unit.PaymentPlan.Russian;
+        }
 
-        unit.Area = request.Area;
-        unit.Rooms = request.Rooms;
-        unit.Status = request.Status;
-        unit.Type = request.Type;
-        unit.Price = request.Price;
-        unit.Stock = request.Stock;
-        unit.ROI = request.ROI;
+        if (request.Area.HasValue)
+            unit.Area = request.Area.Value;
+
+        if (request.Rooms.HasValue)
+            unit.Rooms = request.Rooms.Value;
+
+        if (request.Status.HasValue)
+            unit.Status = request.Status.Value;
+
+        if (request.Type.HasValue)
+            unit.Type = request.Type.Value;
+
+        if (request.Price.HasValue)
+            unit.Price = request.Price.Value;
+
+        if (request.Stock.HasValue)
+            unit.Stock = request.Stock.Value;
+
+        if (request.ROI.HasValue)
+            unit.ROI = request.ROI.Value;
 
         await _unitRepository.UpdateAsync(unit, cancellationToken);
 

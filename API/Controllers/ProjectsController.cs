@@ -46,10 +46,10 @@ public class ProjectsController : BaseController
     {
         var result = await _mediator.Send(command, cancellationToken);
         return HandleResult(result, created: true);
-        
+
     }
-    
-    [HttpPut("{id}")]
+
+    [HttpPatch("{id}")]
     public async Task<IActionResult> Update(
         int id,
         [FromBody] UpdateProjectCommand command,
@@ -101,7 +101,7 @@ public class ProjectsController : BaseController
         return HandleResult(result);
     }
 
-    [HttpPut("{id}/attractions/{attractionId}")]
+    [HttpPatch("{id}/attractions/{attractionId}")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateAttraction(
         int id, int attractionId,

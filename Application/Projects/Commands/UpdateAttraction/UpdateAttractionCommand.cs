@@ -9,8 +9,8 @@ public class UpdateAttractionCommand : IRequest<Result>
 {
     public int Id { get; set; }
     public int ProjectId { get; set; }
-    public LocalizedText Name { get; set; } = null!;
-    public int TimeInMinutes { get; set; }
-    public IFormFile? Icon { get; set; }   
-    public bool RemoveIcon { get; set; }  
+    public LocalizedText? Name { get; set; }
+    public int? TimeInMinutes { get; set; }
+    public IFormFile? Icon { get; set; }
+    public bool RemoveIcon { get; set; }
 }

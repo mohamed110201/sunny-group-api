@@ -43,7 +43,7 @@ public class BlogsController : BaseController
         return HandleResult(result, created: true);
     }
 
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     public async Task<IActionResult> Update(
         int id,
         [FromBody] UpdateBlogCommand command,

@@ -29,14 +29,14 @@ public class UnitsController : BaseController
         var result = await _mediator.Send(new GetAllUnitsQuery(), cancellationToken);
         return HandleResult(result);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAllByProjectId(int projectId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetUnitsByProjectIdQuery(projectId), cancellationToken);
         return HandleResult(result);
     }
-    
+
     [HttpGet("{unitId}")]
     public async Task<IActionResult> GetById(int projectId, int unitId, CancellationToken cancellationToken)
     {
@@ -55,7 +55,7 @@ public class UnitsController : BaseController
         return HandleResult(result, created: true);
     }
 
-    [HttpPut("{unitId}")]
+    [HttpPatch("{unitId}")]
     public async Task<IActionResult> Update(
         int projectId,
         int unitId,
@@ -86,7 +86,7 @@ public class UnitsController : BaseController
         [FromForm] AddUnitMediaCommand command,
         CancellationToken cancellationToken)
     {
-        
+
         command.ProjectId = projectId;
         command.UnitId = unitId;
         var result = await _mediator.Send(command);

@@ -34,8 +34,16 @@ public class UpdateAttractionCommandHandler : IRequestHandler<UpdateAttractionCo
         if (attraction is null)
             return Result.Failure("Attraction.NotFound", "Attraction not found", 404);
 
-        attraction.Name = request.Name;
-        attraction.TimeInMinutes = request.TimeInMinutes;
+        if (request.Name != null)
+        {
+            attraction.Name.English = request.Name.English ?? attraction.Name.English;
+            attraction.Name.Arabic = request.Name.Arabic ?? attraction.Name.Arabic;
+            attraction.Name.Italian = request.Name.Italian ?? attraction.Name.Italian;
+            attraction.Name.Russian = request.Name.Russian ?? attraction.Name.Russian;
+        }
+
+        if (request.TimeInMinutes.HasValue)
+            attraction.TimeInMinutes = request.TimeInMinutes.Value;
 
         if (request.RemoveIcon)
         {

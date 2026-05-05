@@ -36,7 +36,7 @@ public class HomeController : BaseController
         return HandleResult(result);
     }
 
-    [HttpPut("settings")]
+    [HttpPatch("settings")]
     public async Task<IActionResult> UpdateSettings(
         [FromBody] UpdateSettingsCommand command,
         CancellationToken cancellationToken)
@@ -51,10 +51,10 @@ public class HomeController : BaseController
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return HandleResult(result, created:true);
+        return HandleResult(result, created: true);
     }
 
-    [HttpPut("voice-of-customers/{id}")]
+    [HttpPatch("voice-of-customers/{id}")]
     public async Task<IActionResult> UpdateVoiceOfCustomer(
         int id,
         [FromBody] UpdateVoiceOfCustomerCommand command,
