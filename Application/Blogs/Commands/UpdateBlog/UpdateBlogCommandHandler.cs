@@ -8,13 +8,16 @@ namespace Application.Blogs.Commands.UpdateBlog;
 public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Result>
 {
     private readonly IBlogRepository _blogRepository;
+    private readonly IBlogCategoryRepository _categoryRepository;
     private readonly IMemoryCache _cache;
 
     public UpdateBlogCommandHandler(
         IBlogRepository blogRepository,
+        IBlogCategoryRepository categoryRepository,
         IMemoryCache cache)
     {
         _blogRepository = blogRepository;
+        _categoryRepository = categoryRepository;
         _cache = cache;
     }
 
@@ -57,8 +60,14 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
         if (request.MetaDescription != null)
             blog.MetaDescription = request.MetaDescription;
 
-        if (request.Category.HasValue)
-            blog.Category = request.Category.Value;
+        if (request.CategoryId.HasValue)
+        {
+            var category = await _categoryRepository.GetByIdAsync(request.CategoryId.Value, cancellationToken);
+            if (category == null || !category.IsActive)
+                return Result.Failure("Category.NotFound","Category not found or is inactive",404);
+
+            blog.CategoryId = request.CategoryId.Value;
+        }
 
         await _blogRepository.UpdateAsync(blog, cancellationToken);
 

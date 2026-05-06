@@ -14,6 +14,6 @@ public class UpdateBlogCommandValidator : AbstractValidator<UpdateBlogCommand>
             .MaximumLength(200).When(x => x.MetaTitle != null).WithMessage("Meta title must not exceed 200 characters");
         RuleFor(x => x.MetaDescription).NotEmpty().When(x => x.MetaDescription != null).WithMessage("Meta description is required")
             .MaximumLength(500).When(x => x.MetaDescription != null).WithMessage("Meta description must not exceed 500 characters");
-        RuleFor(x => x.Category).IsInEnum().When(x => x.Category.HasValue).WithMessage("Invalid category");
+        RuleFor(x => x.CategoryId).GreaterThan(0).When(x => x.CategoryId.HasValue).WithMessage("Valid category is required");
     }
 }

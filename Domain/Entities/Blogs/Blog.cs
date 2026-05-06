@@ -1,4 +1,3 @@
-using Domain.Enums;
 using Domain.ValueObjects;
 
 namespace Domain.Entities.Blogs;
@@ -11,7 +10,8 @@ public class Blog
     public LocalizedText Content { get; set; } = null!;
     public string MetaTitle { get; set; } = string.Empty;
     public string MetaDescription { get; set; } = string.Empty;
-    public BlogCategory Category { get; set; }
+    public int CategoryId { get; set; }
+    public BlogCategory Category { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
     public ICollection<BlogMedia> Media { get; set; } = [];
 }

@@ -30,9 +30,8 @@ namespace infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -49,7 +48,31 @@ namespace infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Blogs", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Blogs.BlogMedia", b =>
@@ -327,6 +350,12 @@ namespace infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Blogs.Blog", b =>
                 {
+                    b.HasOne("Domain.Entities.Blogs.BlogCategory", "Category")
+                        .WithMany("Blogs")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("Domain.ValueObjects.LocalizedText", "Content", b1 =>
                         {
                             b1.Property<int>("BlogId")
@@ -416,6 +445,8 @@ namespace infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("BlogId");
                         });
+
+                    b.Navigation("Category");
 
                     b.Navigation("Content")
                         .IsRequired();
@@ -754,6 +785,11 @@ namespace infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Blogs.Blog", b =>
                 {
                     b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 
             modelBuilder.Entity("Domain.Entities.Projects.Project", b =>

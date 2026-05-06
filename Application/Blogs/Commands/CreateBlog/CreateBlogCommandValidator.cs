@@ -13,6 +13,6 @@ public class CreateBlogCommandValidator : AbstractValidator<CreateBlogCommand>
             .MaximumLength(200).WithMessage("Meta title must not exceed 200 characters");
         RuleFor(x => x.MetaDescription).NotEmpty().WithMessage("Meta description is required")
             .MaximumLength(500).WithMessage("Meta description must not exceed 500 characters");
-        RuleFor(x => x.Category).IsInEnum().WithMessage("Invalid category");
+        RuleFor(x => x.CategoryId).GreaterThan(0).WithMessage("Valid category is required");
     }
 }

@@ -1,5 +1,4 @@
 using Application.Blogs.Dtos;
-using Application.Common.Translations;
 using Domain.Entities.Blogs;
 using Domain.Enums;
 
@@ -12,7 +11,7 @@ public static class BlogMappings
         Id = blog.Id,
         Title = blog.Title,
         Description = blog.Description,
-        Category = blog.Category,
+        Category = blog.Category.Name,
         CreatedAt = blog.CreatedAt,
         Cover = blog.Media
             .Where(m => m.Category == MediaCategory.Cover)
@@ -26,7 +25,7 @@ public static class BlogMappings
         Title = blog.Title,
         Description = blog.Description,
         Content = blog.Content,
-        Category = blog.Category,
+        Category = blog.Category.Name,
         MetaTitle = blog.MetaTitle,
         MetaDescription = blog.MetaDescription,
         CreatedAt = blog.CreatedAt,
@@ -46,4 +45,5 @@ public static class BlogMappings
         Url = media.Url,
         Category = media.Category
     };
+ 
 }

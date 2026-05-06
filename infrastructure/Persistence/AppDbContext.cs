@@ -17,6 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<Attraction> Attractions => Set<Attraction>();
     public DbSet<Unit> Units => Set<Unit>();
     public DbSet<UnitMedia> UnitMedia => Set<UnitMedia>();
+    public DbSet<BlogCategory> BlogCategories => Set<BlogCategory>();
     public DbSet<Blog> Blogs => Set<Blog>();
     public DbSet<BlogMedia> BlogMedia => Set<BlogMedia>();
     public DbSet<VoiceOfCustomer> VoiceOfCustomers => Set<VoiceOfCustomer>();

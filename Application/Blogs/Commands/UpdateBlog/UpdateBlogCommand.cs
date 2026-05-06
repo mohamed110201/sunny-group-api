@@ -13,5 +13,5 @@ public class UpdateBlogCommand : IRequest<Result>
     public LocalizedText? Content { get; set; }
     public string? MetaTitle { get; set; }
     public string? MetaDescription { get; set; }
-    public BlogCategory? Category { get; set; }
+    public int? CategoryId { get; set; }
 }

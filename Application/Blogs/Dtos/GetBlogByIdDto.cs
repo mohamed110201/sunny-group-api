@@ -1,4 +1,3 @@
-using Domain.Enums;
 using Domain.ValueObjects;
 
 namespace Application.Blogs.Dtos;
@@ -9,7 +8,7 @@ public class GetBlogByIdDto
     public LocalizedText Title { get; set; } = null!;
     public LocalizedText Description { get; set; } = null!;
     public LocalizedText Content { get; set; } = null!;
-    public BlogCategory Category { get; set; } 
+    public string Category { get; set; } = null!;
     public string MetaTitle { get; set; } = string.Empty;
     public string MetaDescription { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }

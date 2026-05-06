@@ -45,8 +45,13 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .IsRequired()
             .HasMaxLength(500);
 
-        builder.Property(b => b.Category)
-            .HasConversion<string>();
+        builder.Property(b => b.CategoryId)
+            .IsRequired();
+
+        builder.HasOne(b => b.Category)
+            .WithMany(c => c.Blogs)
+            .HasForeignKey(b => b.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(b => b.CreatedAt)
             .IsRequired();

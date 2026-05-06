@@ -19,6 +19,7 @@ public class BlogRepository : IBlogRepository
     {
         return await _context.Blogs
             .Include(b => b.Media)
+            .Include(b => b.Category)
             .OrderByDescending(b => b.CreatedAt)
             .ToListAsync(cancellationToken);
     }
@@ -27,6 +28,7 @@ public class BlogRepository : IBlogRepository
     {
         return await _context.Blogs
             .Include(b => b.Media)
+            .Include(b => b.Category)
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
     }
 

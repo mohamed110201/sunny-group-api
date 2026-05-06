@@ -9,13 +9,16 @@ namespace Application.Blogs.Commands.CreateBlog;
 public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Result<int>>
 {
     private readonly IBlogRepository _blogRepository;
+    private readonly IBlogCategoryRepository _categoryRepository;
     private readonly IMemoryCache _cache;
 
     public CreateBlogCommandHandler(
         IBlogRepository blogRepository,
+        IBlogCategoryRepository categoryRepository,
         IMemoryCache cache)
     {
         _blogRepository = blogRepository;
+        _categoryRepository = categoryRepository;
         _cache = cache;
     }
 
@@ -23,6 +26,10 @@ public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Resul
         CreateBlogCommand request,
         CancellationToken cancellationToken)
     {
+        var category = await _categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
+        if (category == null || !category.IsActive)
+            return Result<int>.Failure("Category.NotFound","Category not found or is inactive",404);
+
         var blog = new Blog
         {
             Title = request.Title,
@@ -30,7 +37,7 @@ public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Resul
             Content = request.Content,
             MetaTitle = request.MetaTitle,
             MetaDescription = request.MetaDescription,
-            Category = request.Category,
+            CategoryId = request.CategoryId,
             CreatedAt = DateTime.UtcNow
         };
 

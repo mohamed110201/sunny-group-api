@@ -1,5 +1,4 @@
 using Application.Common;
-using Domain.Enums;
 using Domain.ValueObjects;
 using MediatR;
 
@@ -12,5 +11,5 @@ public class CreateBlogCommand : IRequest<Result<int>>
     public LocalizedText Content { get; set; } = null!;
     public string MetaTitle { get; set; } = string.Empty;
     public string MetaDescription { get; set; } = string.Empty;
-    public BlogCategory Category { get; set; }
+    public int CategoryId { get; set; }
 }
