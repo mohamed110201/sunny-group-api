@@ -21,6 +21,8 @@ public static class DependencyInjectionRegister
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
         services.Configure<MediaValidationOptions>(
             options => configuration.GetSection("MediaValidation").Bind(options));
+        services.Configure<DocumentValidationOptions>(
+            options => configuration.GetSection("DocumentValidation").Bind(options));
         return services;
     }
 }

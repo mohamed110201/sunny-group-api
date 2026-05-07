@@ -54,6 +54,9 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         if (request.Type.HasValue)
             unit.Type = request.Type.Value;
+        
+        if (request.DeliveryCondition.HasValue)
+            unit.DeliveryCondition = request.DeliveryCondition.Value;
 
         if (request.Price.HasValue)
             unit.Price = request.Price.Value;

@@ -22,6 +22,8 @@ public class AppDbContext : DbContext
     public DbSet<BlogMedia> BlogMedia => Set<BlogMedia>();
     public DbSet<VoiceOfCustomer> VoiceOfCustomers => Set<VoiceOfCustomer>();
     public DbSet<Settings> Settings => Set<Settings>();
+    public DbSet<ProjectDocument> ProjectDocuments => Set<ProjectDocument>();
+    public DbSet<UnitDocument> UnitDocuments => Set<UnitDocument>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

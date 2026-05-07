@@ -11,6 +11,7 @@ public class GetAllUnitsDto
     public int Rooms { get; set; }
     public LocalizedText  Status { get; set; }
     public LocalizedText  Type { get; set; }
+    public LocalizedText  DeliveryCondition { get; set; }
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public double ROI { get; set; }

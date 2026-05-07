@@ -204,6 +204,32 @@ namespace infrastructure.Migrations
                     b.ToTable("Projects", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Projects.ProjectDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectDocuments", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Projects.ProjectMedia", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +266,10 @@ namespace infrastructure.Migrations
                     b.Property<int>("Area")
                         .HasColumnType("integer");
 
+                    b.Property<string>("DeliveryCondition")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -268,6 +298,32 @@ namespace infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Units.UnitDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("UnitDocuments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Units.UnitMedia", b =>
@@ -683,6 +739,17 @@ namespace infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.Projects.ProjectDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Projects.Project", "Project")
+                        .WithMany("Documents")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Domain.Entities.Projects.ProjectMedia", b =>
                 {
                     b.HasOne("Domain.Entities.Projects.Project", "Project")
@@ -771,6 +838,17 @@ namespace infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Units.UnitDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Units.Unit", "Unit")
+                        .WithMany("Documents")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("Domain.Entities.Units.UnitMedia", b =>
                 {
                     b.HasOne("Domain.Entities.Units.Unit", "Unit")
@@ -796,6 +874,8 @@ namespace infrastructure.Migrations
                 {
                     b.Navigation("Attractions");
 
+                    b.Navigation("Documents");
+
                     b.Navigation("Media");
 
                     b.Navigation("Units");
@@ -803,6 +883,8 @@ namespace infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Units.Unit", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Media");
                 });
 #pragma warning restore 612, 618

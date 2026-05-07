@@ -39,6 +39,7 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
             Rooms = request.Rooms,
             Status = request.Status,
             Type = request.Type,
+            DeliveryCondition =  request.DeliveryCondition,
             Price = request.Price,
             Stock = request.Stock,
             PaymentPlan = request.PaymentPlan,

@@ -12,6 +12,8 @@ public class UpdateUnitCommandValidator : AbstractValidator<UpdateUnitCommand>
         RuleFor(x => x.Area).GreaterThan(0).When(x => x.Area.HasValue).WithMessage("Area must be greater than 0");
         RuleFor(x => x.Rooms).GreaterThanOrEqualTo(0).When(x => x.Rooms.HasValue).WithMessage("Rooms cannot be negative");
         RuleFor(x => x.Status).IsInEnum().When(x => x.Status.HasValue).WithMessage("Invalid status");
+        RuleFor(x => x.DeliveryCondition).IsInEnum().When(x => x.DeliveryCondition.HasValue).WithMessage("Invalid delivery condition");
+
         RuleFor(x => x.Type).IsInEnum().When(x => x.Type.HasValue).WithMessage("Invalid type");
         RuleFor(x => x.Price).GreaterThan(0).When(x => x.Price.HasValue).WithMessage("Price must be greater than 0");
         RuleFor(x => x.Stock).GreaterThanOrEqualTo(0).When(x => x.Stock.HasValue).WithMessage("Stock cannot be negative");

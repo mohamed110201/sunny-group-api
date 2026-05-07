@@ -10,7 +10,6 @@ using Application.Blogs.Commands.UpdateBlogCategory;
 using Application.Blogs.Queries.GetAllBlogs;
 using Application.Blogs.Queries.GetAllBlogCategories;
 using Application.Blogs.Queries.GetBlogById;
-using Application.Blogs.Queries.GetBlogCategoryById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,13 +32,7 @@ public class BlogsController : BaseController
         var result = await _mediator.Send(new GetAllBlogCategoriesQuery(), cancellationToken);
         return HandleResult(result);
     }
-
-    [HttpGet("categories/{id}")]
-    public async Task<IActionResult> GetCategoryById(int id, CancellationToken cancellationToken)
-    {
-        var result = await _mediator.Send(new GetBlogCategoryByIdQuery(id), cancellationToken);
-        return HandleResult(result);
-    }
+    
 
     [HttpPost("categories")]
     public async Task<IActionResult> CreateCategory(

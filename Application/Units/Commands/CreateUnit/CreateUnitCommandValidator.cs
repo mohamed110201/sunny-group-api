@@ -11,6 +11,8 @@ public class CreateUnitCommandValidator : AbstractValidator<CreateUnitCommand>
         RuleFor(x => x.Area).GreaterThan(0).WithMessage("Area must be greater than 0");
         RuleFor(x => x.Rooms).GreaterThanOrEqualTo(0).WithMessage("Rooms cannot be negative");
         RuleFor(x => x.Status).IsInEnum().WithMessage("Invalid status");
+        RuleFor(x => x.DeliveryCondition).IsInEnum().WithMessage("Invalid delivery condition");
+
         RuleFor(x => x.Type).IsInEnum().WithMessage("Invalid type");
         RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
         RuleFor(x => x.Stock).GreaterThanOrEqualTo(0).WithMessage("Stock cannot be negative");
