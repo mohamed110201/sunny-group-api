@@ -19,6 +19,8 @@ public class Project
     public List<ProjectType> Types { get; set; } = [];
     public PriceRange PriceRange { get; set; } = null!;
     public ICollection<ProjectMedia> Media { get; set; } = [];
+    public ICollection<ProjectDocument> Documents { get; set; } = [];
+
     public ICollection<Attraction> Attractions { get; set; } = [];
     public ICollection<Unit> Units { get; set; } = [];
 }

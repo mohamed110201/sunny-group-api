@@ -19,6 +19,7 @@ public class GetProjectByIdDto
     public List<LocalizedText > Types { get; set; } = [];
     public PriceRange PriceRange { get; set; } = null!;
     public List<ProjectMediaResponseDto> Media { get; set; } = [];
+    public List<ProjectDocumentResponseDto> Documents { get; set; } = [];
     public List<AttractionResponseDto> Attractions { get; set; } = [];
     public List<GetAllUnitsDto> Units { get; set; } = [];
 

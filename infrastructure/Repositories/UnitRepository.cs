@@ -24,6 +24,7 @@ public class UnitRepository : IUnitRepository
     {
         return await db_context.Units
             .Include(u => u.Media)
+            .Include(u=>u.Documents)
             .Where(u => u.ProjectId == projectId)
             .ToListAsync(cancellationToken);
     }
@@ -32,6 +33,7 @@ public class UnitRepository : IUnitRepository
     {
         return await db_context.Units
             .Include(u => u.Media)
+            .Include(u=>u.Documents)
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 

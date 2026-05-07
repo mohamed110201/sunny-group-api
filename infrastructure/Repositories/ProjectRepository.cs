@@ -25,6 +25,7 @@ public class ProjectRepository : IProjectRepository
     {
         return await db_context.Projects
             .Include(p => p.Media)
+            .Include(p=>p.Documents)
             .Include(p => p.Units)
             .Include(p => p.Attractions)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);

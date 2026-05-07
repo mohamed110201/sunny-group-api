@@ -1,10 +1,12 @@
 using API.Common;
 using API.Common.JSend;
 using Application.Projects.Commands.AddAttraction;
+using Application.Projects.Commands.AddProjectDocuments;
 using Application.Projects.Commands.AddProjectMedia;
 using Application.Projects.Commands.CreateProject;
 using Application.Projects.Commands.DeleteAttraction;
 using Application.Projects.Commands.DeleteProject;
+using Application.Projects.Commands.DeleteProjectDocument;
 using Application.Projects.Commands.DeleteProjectMedia;
 using Application.Projects.Commands.UpdateAttraction;
 using Application.Projects.Commands.UpdateProject;
@@ -86,6 +88,28 @@ public class ProjectsController : BaseController
     {
         var result = await _mediator.Send(
             new DeleteProjectMediaCommand(id, mediaId), cancellationToken);
+        return HandleResult(result);
+    }
+    [HttpPost("{id}/documents")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> AddDocuments(
+        int id,
+        [FromForm] AddProjectDocumentsCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.ProjectId = id;
+        var result = await _mediator.Send(command, cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("{id}/documents/{documentId}")]
+    public async Task<IActionResult> DeleteDocument(
+        int id,
+        int documentId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new DeleteProjectDocumentCommand(id, documentId), cancellationToken);
         return HandleResult(result);
     }
 

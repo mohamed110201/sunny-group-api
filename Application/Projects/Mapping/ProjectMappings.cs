@@ -46,7 +46,8 @@ public static class ProjectMappings
         Attractions = project.Attractions
             .Select(a => a.ToDto())
             .ToList(),
-        Units = project.Units.Select(u=>u.ToGetAllDto()).ToList()
+        Units = project.Units.Select(u=>u.ToGetAllDto()).ToList(),
+        Documents = project.Documents.Select(d => d.ToDto()).ToList()
     };
 
     private static ProjectMediaResponseDto ToDto(this ProjectMedia media) => new()
@@ -61,5 +62,11 @@ public static class ProjectMappings
         Name = attraction.Name,
         TimeInMinutes = attraction.TimeInMinutes,
         IconUrl = attraction.IconUrl
+    };
+    private static ProjectDocumentResponseDto ToDto(this ProjectDocument document) => new()
+    {
+            Id = document.Id,
+            Url = document.Url,
+            Category = document.Category
     };
 }

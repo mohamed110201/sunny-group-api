@@ -9,6 +9,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
 using API.Common.JSend;
+using Application.Units.Commands.AddUnitDocuments;
+using Application.Units.Commands.DeleteUnitDocument;
 using Application.Units.Dtos;
 using Application.Units.Queries.GetAllUnits;
 
@@ -102,6 +104,31 @@ public class UnitsController : BaseController
     {
         var result = await _mediator.Send(
             new DeleteUnitMediaCommand(projectId, unitId, mediaId), cancellationToken);
+        return HandleResult(result);
+    }
+    [HttpPost("{unitId}/documents")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> AddDocuments(
+        int projectId,
+        int unitId,
+        [FromForm] AddUnitDocumentsCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.UnitId = unitId;
+        command.ProjectId = projectId;
+        var result = await _mediator.Send(command, cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("{unitId}/documents/{documentId}")]
+    public async Task<IActionResult> DeleteDocument(
+        int projectId,
+        int unitId,
+        int documentId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new DeleteUnitDocumentCommand(projectId, unitId, documentId), cancellationToken);
         return HandleResult(result);
     }
 

@@ -40,6 +40,8 @@ public class UnitConfiguration : IEntityTypeConfiguration<Unit>
 
         builder.Property(u => u.Type)
             .HasConversion<string>();
+        builder.Property(u => u.DeliveryCondition)
+            .HasConversion<string>();
 
         builder.Property(u => u.Price)
             .HasColumnType("decimal(18,2)");
