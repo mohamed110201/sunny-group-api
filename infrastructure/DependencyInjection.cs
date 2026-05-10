@@ -1,8 +1,10 @@
+using Application.Common.Interfaces;
 using Domain.Interfaces;
 using infrastructure.Persistence;
 using infrastructure.Repositories;
 using Infrastructure.Repositories;
 using infrastructure.Services;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,8 @@ public static class DependencyInjection
         services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
         services.AddScoped<IVoiceOfCustomerRepository, VoiceOfCustomerRepository>();
         services.AddScoped<ISettingsRepository, SettingsRepository>();
+        services.AddScoped<IHtmlSanitizerService, HtmlSanitizerService>();
+
         return services;
     }
 }

@@ -1,4 +1,5 @@
 using Application.Common;
+using Application.Common.Interfaces;
 using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,15 +11,20 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
     private readonly IBlogRepository _blogRepository;
     private readonly IBlogCategoryRepository _categoryRepository;
     private readonly IMemoryCache _cache;
+    private readonly IHtmlSanitizerService _sanitizer;
+
 
     public UpdateBlogCommandHandler(
         IBlogRepository blogRepository,
         IBlogCategoryRepository categoryRepository,
-        IMemoryCache cache)
+        IMemoryCache cache,
+        IHtmlSanitizerService sanitizer
+        )
     {
         _blogRepository = blogRepository;
         _categoryRepository = categoryRepository;
         _cache = cache;
+        _sanitizer  = sanitizer;
     }
 
     public async Task<Result> Handle(
@@ -48,10 +54,16 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
 
         if (request.Content != null)
         {
-            blog.Content.English = request.Content.English ?? blog.Content.English;
-            blog.Content.Arabic = request.Content.Arabic ?? blog.Content.Arabic;
-            blog.Content.Italian = request.Content.Italian ?? blog.Content.Italian;
-            blog.Content.Russian = request.Content.Russian ?? blog.Content.Russian;
+            blog.Content.English = _sanitizer.Sanitize(request.Content.English);
+            blog.Content.Arabic = request.Content.Arabic is null
+                ? blog.Content.Arabic
+                : _sanitizer.Sanitize(request.Content.Arabic);
+            blog.Content.Italian = request.Content.Italian is null
+                ? blog.Content.Italian
+                : _sanitizer.Sanitize(request.Content.Italian);
+            blog.Content.Russian = request.Content.Russian is null
+                ? blog.Content.Russian
+                : _sanitizer.Sanitize(request.Content.Russian);
         }
 
         if (request.MetaTitle != null)

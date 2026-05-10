@@ -36,6 +36,8 @@ public class InquiryConfiguration : IEntityTypeConfiguration<Inquiry>
 
         builder.Property(i => i.CreatedAt)
             .IsRequired();
+        builder.Property(i => i.PageSlug)
+            .HasMaxLength(500);
 
         builder.Ignore(i => i.FullPhoneNumber);
 

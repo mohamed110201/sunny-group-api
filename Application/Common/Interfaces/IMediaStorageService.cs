@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Domain.Interfaces;
+namespace Application.Common.Interfaces;
 
 public interface IMediaStorageService
 {

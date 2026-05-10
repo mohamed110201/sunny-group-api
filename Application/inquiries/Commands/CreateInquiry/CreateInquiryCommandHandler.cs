@@ -30,7 +30,9 @@ public class CreateInquiryCommandHandler : IRequestHandler<CreateInquiryCommand,
             PhoneNumber = request.PhoneNumber,
             Email = request.Email,
             Message = request.Message,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            PageSlug = request.PageSlug ?? string.Empty
+
         };
 
         await _inquiryRepository.AddAsync(inquiry, cancellationToken);

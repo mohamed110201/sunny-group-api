@@ -1,6 +1,8 @@
 using Application.Common;
+using Application.Common.Interfaces;
 using Domain.Entities.Blogs;
 using Domain.Interfaces;
+using Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -11,15 +13,19 @@ public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Resul
     private readonly IBlogRepository _blogRepository;
     private readonly IBlogCategoryRepository _categoryRepository;
     private readonly IMemoryCache _cache;
+    private readonly IHtmlSanitizerService _sanitizer;
+
 
     public CreateBlogCommandHandler(
         IBlogRepository blogRepository,
         IBlogCategoryRepository categoryRepository,
-        IMemoryCache cache)
+        IMemoryCache cache,
+        IHtmlSanitizerService sanitizer)
     {
         _blogRepository = blogRepository;
         _categoryRepository = categoryRepository;
         _cache = cache;
+        _sanitizer = sanitizer;
     }
 
     public async Task<Result<int>> Handle(
@@ -34,7 +40,13 @@ public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Resul
         {
             Title = request.Title,
             Description = request.Description,
-            Content = request.Content,
+            Content = new LocalizedText
+            {
+                English = _sanitizer.Sanitize(request.Content.English),
+                Arabic = request.Content.Arabic is null ? null : _sanitizer.Sanitize(request.Content.Arabic),
+                Italian = request.Content.Italian is null ? null : _sanitizer.Sanitize(request.Content.Italian),
+                Russian = request.Content.Russian is null ? null : _sanitizer.Sanitize(request.Content.Russian)
+            },
             MetaTitle = request.MetaTitle,
             MetaDescription = request.MetaDescription,
             CategoryId = request.CategoryId,

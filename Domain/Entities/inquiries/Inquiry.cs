@@ -12,4 +12,6 @@ public class Inquiry
     public bool IsSeen { get; set; }
     public DateTime? SeenAt { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string PageSlug { get; set; } = string.Empty;
+
 }

@@ -1,4 +1,5 @@
 using Application.Common;
+using Application.Common.Interfaces;
 using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;

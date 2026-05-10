@@ -1,4 +1,4 @@
-using Domain.Interfaces;
+using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 

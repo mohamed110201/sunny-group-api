@@ -15,6 +15,7 @@ public static class InquiryMappings
         Message = inquiry.Message,
         IsSeen = inquiry.IsSeen,
         SeenAt = inquiry.SeenAt,
-        CreatedAt = inquiry.CreatedAt
+        CreatedAt = inquiry.CreatedAt,
+        PageSlug = inquiry.PageSlug,
     };
 }
