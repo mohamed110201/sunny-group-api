@@ -567,7 +567,7 @@ namespace infrastructure.Migrations
                     b.HasOne("Domain.Entities.Projects.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("Domain.ValueObjects.LocalizedText", "Comment", b1 =>

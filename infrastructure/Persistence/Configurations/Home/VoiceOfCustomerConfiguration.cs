@@ -25,7 +25,7 @@ public class VoiceOfCustomerConfiguration : IEntityTypeConfiguration<VoiceOfCust
         builder.HasOne(v => v.Project)
             .WithMany()
             .HasForeignKey(v => v.ProjectId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.ToTable("VoiceOfCustomers");
     }
