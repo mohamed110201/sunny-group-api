@@ -7,12 +7,7 @@ public class CreateBlogCategoryCommandValidator : AbstractValidator<CreateBlogCa
 {
     public CreateBlogCategoryCommandValidator()
     {
-        RuleFor(x => x.Name)
-            .NotNull()
-            .WithMessage("Category name is required");
-
-        RuleFor(x => x.Name)
-            .NotEmpty()
-            .WithMessage("English name is required");
+        RuleFor(x => x.Name.English)
+            .NotEmpty().WithMessage("English name is required");
     }
 }

@@ -66,10 +66,6 @@ namespace infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("BlogCategories", (string)null);
@@ -516,6 +512,42 @@ namespace infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Title")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "Name", b1 =>
+                        {
+                            b1.Property<int>("BlogCategoryId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("name_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("name_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("name_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("name_ru");
+
+                            b1.HasKey("BlogCategoryId");
+
+                            b1.ToTable("BlogCategories");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BlogCategoryId");
+                        });
+
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 

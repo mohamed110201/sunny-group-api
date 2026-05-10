@@ -18,8 +18,13 @@ public class BlogCategoryConfiguration : IEntityTypeConfiguration<BlogCategory>
             .IsRequired()
             .HasDefaultValue(true);
 
-        builder.Property(bc => bc.Name)
-            .IsRequired();
+        builder.OwnsOne(bc => bc.Name, name =>
+        {
+            name.Property(n => n.Arabic).HasColumnName("name_ar");
+            name.Property(n => n.English).HasColumnName("name_en").IsRequired();
+            name.Property(n => n.Italian).HasColumnName("name_it");
+            name.Property(n => n.Russian).HasColumnName("name_ru");
+        });
 
         builder.HasMany(bc => bc.Blogs)
             .WithOne(b => b.Category)

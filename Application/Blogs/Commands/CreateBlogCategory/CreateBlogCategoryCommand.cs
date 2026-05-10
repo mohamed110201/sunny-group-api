@@ -7,5 +7,5 @@ namespace Application.Blogs.Commands.CreateBlogCategory;
 
 public class CreateBlogCategoryCommand : IRequest<Result<int>>
 {
-    public string Name { get; set; } = null!;
+    public LocalizedText Name { get; set; } = null!;
 }
