@@ -8,6 +8,8 @@ public class GetAllUnitsDto
     public int Id { get; set; }
     public LocalizedText Name { get; set; } = null!;
     public int Area { get; set; }
+    public string MetaTitle { get; set; } = string.Empty;
+    public string MetaDescription { get; set; } = string.Empty;
     public int Rooms { get; set; }
     public LocalizedText  Status { get; set; }
     public LocalizedText  Type { get; set; }

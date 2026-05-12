@@ -178,6 +178,14 @@ namespace infrastructure.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("MetaDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MetaTitle")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("NumberOfApartments")
                         .HasColumnType("integer");
 
@@ -263,6 +271,14 @@ namespace infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("DeliveryCondition")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MetaDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MetaTitle")
                         .IsRequired()
                         .HasColumnType("text");
 

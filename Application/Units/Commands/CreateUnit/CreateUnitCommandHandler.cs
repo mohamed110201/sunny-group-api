@@ -36,6 +36,8 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
             ProjectId = request.ProjectId,
             Name = request.Name,
             Area = request.Area,
+            MetaTitle = request.MetaTitle,
+            MetaDescription = request.MetaDescription,
             Rooms = request.Rooms,
             Status = request.Status,
             Type = request.Type,

@@ -1,4 +1,5 @@
 using Application.Common.Options;
+using Domain.Enums;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -19,7 +20,11 @@ public class AddProjectMediaCommandValidator : AbstractValidator<AddProjectMedia
             .NotEmpty().WithMessage("At least one image is required")
             .Must(images => images.Count <= settings.MaxImagesPerUpload)
             .WithMessage($"Maximum {settings.MaxImagesPerUpload} images allowed");
-
+        
+        RuleFor(x => x.Images)
+            .Must(images => images.Count(i => i.Category == MediaCategory.Icon) <= 1)
+            .WithMessage("Only one icon is allowed per request");
+        
         RuleForEach(x => x.Images)
             .ChildRules(item =>
             {

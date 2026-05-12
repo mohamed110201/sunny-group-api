@@ -11,6 +11,8 @@ public class CreateProjectCommand : IRequest<Result<int>>
 {
     public LocalizedText Name { get; set; } = null!;
     public LocalizedText Description { get; set; } = null!;
+    public string MetaTitle { get; set; } = string.Empty;
+    public string MetaDescription { get; set; } = string.Empty;
     public int YearOfConstruction { get; set; }
     public int NumberOfVillas { get; set; }
     public int NumberOfApartments { get; set; }

@@ -33,6 +33,8 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
         {
             Name = request.Name,
             Description = request.Description,
+            MetaTitle = request.MetaTitle,
+            MetaDescription = request.MetaDescription,
             YearOfConstruction = request.YearOfConstruction,
             NumberOfVillas = request.NumberOfVillas,
             NumberOfApartments = request.NumberOfApartments,

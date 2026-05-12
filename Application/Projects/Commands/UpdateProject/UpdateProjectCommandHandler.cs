@@ -42,6 +42,12 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
             project.Description.Russian = request.Description.Russian ?? project.Description.Russian;
         }
 
+        if (request.MetaTitle != null)
+            project.MetaTitle = request.MetaTitle;
+
+        if (request.MetaDescription != null)
+            project.MetaDescription = request.MetaDescription;
+
         if (request.Location != null)
         {
             project.Location.Arabic = request.Location.Arabic ?? project.Location.Arabic;

@@ -46,6 +46,12 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
         if (request.Area.HasValue)
             unit.Area = request.Area.Value;
 
+        if (request.MetaTitle != null)
+            unit.MetaTitle = request.MetaTitle;
+
+        if (request.MetaDescription != null)
+            unit.MetaDescription = request.MetaDescription;
+
         if (request.Rooms.HasValue)
             unit.Rooms = request.Rooms.Value;
 
