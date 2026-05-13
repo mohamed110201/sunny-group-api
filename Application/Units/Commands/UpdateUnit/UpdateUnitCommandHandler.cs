@@ -78,12 +78,13 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         await _unitRepository.UpdateAsync(unit, cancellationToken);
 
-        // Update project's price range based on all units
         await _projectRepository.UpdatePriceRangeAsync(request.ProjectId, cancellationToken);
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove($"units-{request.Id}");
         _cache.Remove("units-all");
+        _cache.Remove("projects-all");
+        _cache.Remove($"projects-{request.ProjectId}");
         return Result.Success();
     }
 }

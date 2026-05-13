@@ -55,6 +55,8 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove("units-all");
+        _cache.Remove("projects-all");
+        _cache.Remove($"projects-{request.ProjectId}");
         return Result<int>.Success(unit.Id);
     }
 }
