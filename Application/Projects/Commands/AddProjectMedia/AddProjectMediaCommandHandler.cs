@@ -13,7 +13,7 @@ public class AddProjectMediaCommandHandler : IRequestHandler<AddProjectMediaComm
 {
     private readonly IProjectRepository _projectRepository;
     private readonly IMediaStorageService _mediaStorage;
-    private readonly IMemoryCache  _cache;
+    private readonly IMemoryCache _cache;
 
     public AddProjectMediaCommandHandler(
         IProjectRepository projectRepository,
@@ -32,12 +32,20 @@ public class AddProjectMediaCommandHandler : IRequestHandler<AddProjectMediaComm
         if (project is null)
             return Result.Failure("Project.NotFound", "Project not found", 404);
         var incomingCovers = request.Images.Count(i => i.Category == MediaCategory.Cover);
+        var incomingIcons = request.Images.Count(i => i.Category == MediaCategory.Icon);
 
         if (incomingCovers > 1)
             return Result.Failure("Media.InvalidCover", "Only one cover image is allowed", 400);
 
         if (incomingCovers == 1 && project.Media.Any(m => m.Category == MediaCategory.Cover))
             return Result.Failure("Media.CoverExists", "Project already has a cover image. Delete it first before adding a new one", 400);
+
+        if (incomingIcons > 1)
+            return Result.Failure("Media.InvalidIcon", "Only one icon is allowed", 400);
+
+        if (incomingIcons == 1 && project.Media.Any(m => m.Category == MediaCategory.Icon))
+            return Result.Failure("Media.IconExists", "Project already has an icon. Delete it first before adding a new one", 400);
+
         foreach (var item in request.Images)
         {
             var url = await _mediaStorage.SaveAsync(
@@ -61,5 +69,5 @@ public class AddProjectMediaCommandHandler : IRequestHandler<AddProjectMediaComm
         return Result.Success();
     }
 
-    
+
 }

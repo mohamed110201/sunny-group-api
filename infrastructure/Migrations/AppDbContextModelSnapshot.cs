@@ -788,8 +788,7 @@ namespace infrastructure.Migrations
                     b.Navigation("Name")
                         .IsRequired();
 
-                    b.Navigation("PriceRange")
-                        .IsRequired();
+                    b.Navigation("PriceRange");
                 });
 
             modelBuilder.Entity("Domain.Entities.Projects.ProjectDocument", b =>
