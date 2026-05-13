@@ -19,5 +19,4 @@ public class UpdateProjectCommand : IRequest<Result>
     public LocalizedText? Location { get; set; }
     public ProjectStatus? Status { get; set; }
     public List<ProjectType>? Types { get; set; }
-    public PriceRange? PriceRange { get; set; }
 }

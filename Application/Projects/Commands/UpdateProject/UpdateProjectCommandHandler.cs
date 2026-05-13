@@ -74,9 +74,6 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
         if (request.Types != null)
             project.Types = request.Types;
 
-        if (request.PriceRange != null)
-            project.PriceRange = request.PriceRange;
-
         await _projectRepository.UpdateAsync(project, cancellationToken);
         _cache.Remove("projects-all");
         _cache.Remove($"projects-{project.Id}");

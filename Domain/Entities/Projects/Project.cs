@@ -16,10 +16,10 @@ public class Project
     public int NumberOfApartments { get; set; }
     public int TotalUnits => NumberOfVillas + NumberOfApartments;
     public double Area { get; set; }
-    public LocalizedText  Location { get; set; }= null!;
+    public LocalizedText Location { get; set; } = null!;
     public ProjectStatus Status { get; set; }
     public List<ProjectType> Types { get; set; } = [];
-    public PriceRange PriceRange { get; set; } = null!;
+    public PriceRange? PriceRange { get; set; }
     public ICollection<ProjectMedia> Media { get; set; } = [];
     public ICollection<ProjectDocument> Documents { get; set; } = [];
 

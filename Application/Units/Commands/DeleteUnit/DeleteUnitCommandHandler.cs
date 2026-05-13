@@ -9,15 +9,18 @@ namespace Application.Units.Commands.DeleteUnit;
 public class DeleteUnitCommandHandler : IRequestHandler<DeleteUnitCommand, Result>
 {
     private readonly IUnitRepository _unitRepository;
+    private readonly IProjectRepository _projectRepository;
     private readonly IMediaStorageService _mediaStorage;
     private readonly IMemoryCache _cache;
 
     public DeleteUnitCommandHandler(
         IUnitRepository unitRepository,
+        IProjectRepository projectRepository,
         IMediaStorageService mediaStorage,
         IMemoryCache cache)
     {
         _unitRepository = unitRepository;
+        _projectRepository = projectRepository;
         _mediaStorage = mediaStorage;
         _cache = cache;
     }
@@ -35,6 +38,9 @@ public class DeleteUnitCommandHandler : IRequestHandler<DeleteUnitCommand, Resul
             await _mediaStorage.DeleteAsync(media.Url, cancellationToken);
 
         await _unitRepository.DeleteAsync(unit, cancellationToken);
+
+        // Update project's price range based on remaining units
+        await _projectRepository.UpdatePriceRangeAsync(request.ProjectId, cancellationToken);
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove($"units-{request.UnitId}");

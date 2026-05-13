@@ -52,15 +52,7 @@ public class UpdateProjectCommandValidator : AbstractValidator<UpdateProjectComm
             .IsInEnum().WithMessage("Invalid project type")
             .When(x => x.Types != null);
 
-        RuleFor(x => x.PriceRange)
-            .NotNull().WithMessage("Price range is required")
-            .When(x => x.PriceRange != null);
-        RuleFor(x => x.PriceRange.Min)
-            .GreaterThanOrEqualTo(0).WithMessage("Minimum price cannot be negative")
-            .When(x => x.PriceRange != null);
-        RuleFor(x => x.PriceRange.Max)
-            .GreaterThan(x => x.PriceRange.Min).WithMessage("Maximum price must be greater than minimum price")
-            .When(x => x.PriceRange != null);
+       
 
 
     }

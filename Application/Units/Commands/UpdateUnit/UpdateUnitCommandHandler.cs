@@ -8,13 +8,16 @@ namespace Application.Units.Commands.UpdateUnit;
 public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Result>
 {
     private readonly IUnitRepository _unitRepository;
+    private readonly IProjectRepository _projectRepository;
     private readonly IMemoryCache _cache;
 
     public UpdateUnitCommandHandler(
         IUnitRepository unitRepository,
+        IProjectRepository projectRepository,
         IMemoryCache cache)
     {
         _unitRepository = unitRepository;
+        _projectRepository = projectRepository;
         _cache = cache;
     }
 
@@ -60,7 +63,7 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         if (request.Type.HasValue)
             unit.Type = request.Type.Value;
-        
+
         if (request.DeliveryCondition.HasValue)
             unit.DeliveryCondition = request.DeliveryCondition.Value;
 
@@ -74,6 +77,9 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
             unit.ROI = request.ROI.Value;
 
         await _unitRepository.UpdateAsync(unit, cancellationToken);
+
+        // Update project's price range based on all units
+        await _projectRepository.UpdatePriceRangeAsync(request.ProjectId, cancellationToken);
 
         _cache.Remove($"units-project-{request.ProjectId}");
         _cache.Remove($"units-{request.Id}");

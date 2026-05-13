@@ -11,7 +11,7 @@ public class CreateProjectCommandValidator : AbstractValidator<CreateProjectComm
 
         RuleFor(x => x.Description.English)
             .NotEmpty().WithMessage("English description is required");
-        
+
 
         RuleFor(x => x.YearOfConstruction)
             .GreaterThan(1900).WithMessage("Invalid year")
@@ -36,14 +36,7 @@ public class CreateProjectCommandValidator : AbstractValidator<CreateProjectComm
         RuleForEach(x => x.Types)
             .IsInEnum().WithMessage("Invalid project type");
 
-        RuleFor(x => x.PriceRange)
-            .NotNull().WithMessage("Price range is required");
-        RuleFor(x => x.PriceRange.Min)
-            .GreaterThanOrEqualTo(0).WithMessage("Minimum price cannot be negative");
-        RuleFor(x => x.PriceRange.Max)
-            .GreaterThan(x => x.PriceRange.Min).WithMessage("Maximum price must be greater than minimum price");
 
-      
     }
-    
+
 }
