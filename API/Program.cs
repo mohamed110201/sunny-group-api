@@ -62,8 +62,8 @@ var app = builder.Build();
  });
 
 app.UseForwardedHeaders();
-if (!app.Environment.IsDevelopment())
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
+//if (!app.Environment.IsDevelopment())
+    //app.UseMiddleware<ExceptionHandlingMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
