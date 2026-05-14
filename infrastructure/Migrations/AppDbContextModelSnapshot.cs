@@ -22,6 +22,59 @@ namespace infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Auth.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Auth.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdminId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("RefreshTokens", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Blogs.Blog", b =>
                 {
                     b.Property<int>("Id")
@@ -35,16 +88,6 @@ namespace infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("MetaDescription")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -178,14 +221,6 @@ namespace infrastructure.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("MetaDescription")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("NumberOfApartments")
                         .HasColumnType("integer");
 
@@ -271,14 +306,6 @@ namespace infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("DeliveryCondition")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MetaDescription")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MetaTitle")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -421,6 +448,17 @@ namespace infrastructure.Migrations
                     b.ToTable("Inquiries", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Auth.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.Entities.Auth.Admin", "Admin")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("Domain.Entities.Blogs.Blog", b =>
                 {
                     b.HasOne("Domain.Entities.Blogs.BlogCategory", "Category")
@@ -489,6 +527,66 @@ namespace infrastructure.Migrations
                                 .HasForeignKey("BlogId");
                         });
 
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaDescription", b1 =>
+                        {
+                            b1.Property<int>("BlogId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ru");
+
+                            b1.HasKey("BlogId");
+
+                            b1.ToTable("Blogs");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BlogId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaTitle", b1 =>
+                        {
+                            b1.Property<int>("BlogId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ru");
+
+                            b1.HasKey("BlogId");
+
+                            b1.ToTable("Blogs");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BlogId");
+                        });
+
                     b.OwnsOne("Domain.ValueObjects.LocalizedText", "Title", b1 =>
                         {
                             b1.Property<int>("BlogId")
@@ -525,6 +623,12 @@ namespace infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Description")
+                        .IsRequired();
+
+                    b.Navigation("MetaDescription")
+                        .IsRequired();
+
+                    b.Navigation("MetaTitle")
                         .IsRequired();
 
                     b.Navigation("Title")
@@ -728,6 +832,64 @@ namespace infrastructure.Migrations
                                 .HasForeignKey("ProjectId");
                         });
 
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaDescription", b1 =>
+                        {
+                            b1.Property<int>("ProjectId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ar");
+
+                            b1.Property<string>("English")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ru");
+
+                            b1.HasKey("ProjectId");
+
+                            b1.ToTable("Projects");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProjectId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaTitle", b1 =>
+                        {
+                            b1.Property<int>("ProjectId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ar");
+
+                            b1.Property<string>("English")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ru");
+
+                            b1.HasKey("ProjectId");
+
+                            b1.ToTable("Projects");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProjectId");
+                        });
+
                     b.OwnsOne("Domain.ValueObjects.LocalizedText", "Name", b1 =>
                         {
                             b1.Property<int>("ProjectId")
@@ -785,6 +947,12 @@ namespace infrastructure.Migrations
                     b.Navigation("Location")
                         .IsRequired();
 
+                    b.Navigation("MetaDescription")
+                        .IsRequired();
+
+                    b.Navigation("MetaTitle")
+                        .IsRequired();
+
                     b.Navigation("Name")
                         .IsRequired();
 
@@ -820,6 +988,65 @@ namespace infrastructure.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaDescription", b1 =>
+                        {
+                            b1.Property<int>("UnitId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ar");
+
+                            b1.Property<string>("English")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_description_ru");
+
+                            b1.HasKey("UnitId");
+
+                            b1.ToTable("Units");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UnitId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "MetaTitle", b1 =>
+                        {
+                            b1.Property<int>("UnitId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_en");
+
+                            b1.Property<string>("Italian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_it");
+
+                            b1.Property<string>("Russian")
+                                .HasColumnType("text")
+                                .HasColumnName("meta_title_ru");
+
+                            b1.HasKey("UnitId");
+
+                            b1.ToTable("Units");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UnitId");
+                        });
 
                     b.OwnsOne("Domain.ValueObjects.LocalizedText", "Name", b1 =>
                         {
@@ -881,6 +1108,12 @@ namespace infrastructure.Migrations
                                 .HasForeignKey("UnitId");
                         });
 
+                    b.Navigation("MetaDescription")
+                        .IsRequired();
+
+                    b.Navigation("MetaTitle")
+                        .IsRequired();
+
                     b.Navigation("Name")
                         .IsRequired();
 
@@ -910,6 +1143,11 @@ namespace infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Auth.Admin", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blogs.Blog", b =>

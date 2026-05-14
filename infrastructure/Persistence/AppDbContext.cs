@@ -1,3 +1,5 @@
+using Domain.Entities;
+using Domain.Entities.Auth;
 using Domain.Entities.Blogs;
 using Domain.Entities.Home;
 using Domain.Entities.inquiries;
@@ -24,6 +26,8 @@ public class AppDbContext : DbContext
     public DbSet<Settings> Settings => Set<Settings>();
     public DbSet<ProjectDocument> ProjectDocuments => Set<ProjectDocument>();
     public DbSet<UnitDocument> UnitDocuments => Set<UnitDocument>();
+    public DbSet<Admin> Admins => Set<Admin>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
