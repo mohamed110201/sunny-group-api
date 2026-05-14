@@ -9,8 +9,8 @@ public class GetBlogByIdDto
     public LocalizedText Description { get; set; } = null!;
     public LocalizedText Content { get; set; } = null!;
     public LocalizedText Category { get; set; } = null!;
-    public string MetaTitle { get; set; } = string.Empty;
-    public string MetaDescription { get; set; } = string.Empty;
+    public LocalizedText MetaTitle { get; set; } = null!;
+    public LocalizedText MetaDescription { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
     public BlogMediaResponseDto? Cover { get; set; }
     public List<BlogMediaResponseDto> Gallery { get; set; } = [];

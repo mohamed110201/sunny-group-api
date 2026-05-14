@@ -46,6 +46,22 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             loc.Property(l => l.Russian).HasColumnName("location_ru");
         });
 
+        builder.OwnsOne(p => p.MetaTitle, meta =>
+        {
+            meta.Property(m => m.Arabic).HasColumnName("meta_title_ar");
+            meta.Property(m => m.English).HasColumnName("meta_title_en");
+            meta.Property(m => m.Italian).HasColumnName("meta_title_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_title_ru");
+        });
+
+        builder.OwnsOne(p => p.MetaDescription, meta =>
+        {
+            meta.Property(m => m.Arabic).HasColumnName("meta_description_ar");
+            meta.Property(m => m.English).HasColumnName("meta_description_en");
+            meta.Property(m => m.Italian).HasColumnName("meta_description_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_description_ru");
+        });
+
         builder.Property(p => p.Area)
             .HasColumnType("double precision");
 
@@ -69,12 +85,12 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .Metadata.SetValueComparer(comparer);
 
         builder.Ignore(p => p.TotalUnits);
-        
+
         builder.HasMany(p => p.Media)
             .WithOne(m => m.Project)
             .HasForeignKey(m => m.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(p => p.Attractions)
             .WithOne(m => m.Project)
             .HasForeignKey(m => m.ProjectId)

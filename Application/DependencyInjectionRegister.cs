@@ -23,6 +23,8 @@ public static class DependencyInjectionRegister
             options => configuration.GetSection("MediaValidation").Bind(options));
         services.Configure<DocumentValidationOptions>(
             options => configuration.GetSection("DocumentValidation").Bind(options));
+        services.Configure<JwtOptions>(
+            options => configuration.GetSection("Jwt").Bind(options));
         return services;
     }
 }

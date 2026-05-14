@@ -24,7 +24,7 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
         _blogRepository = blogRepository;
         _categoryRepository = categoryRepository;
         _cache = cache;
-        _sanitizer  = sanitizer;
+        _sanitizer = sanitizer;
     }
 
     public async Task<Result> Handle(
@@ -67,16 +67,26 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
         }
 
         if (request.MetaTitle != null)
-            blog.MetaTitle = request.MetaTitle;
+        {
+            blog.MetaTitle.English = request.MetaTitle.English ?? blog.MetaTitle.English;
+            blog.MetaTitle.Arabic = request.MetaTitle.Arabic ?? blog.MetaTitle.Arabic;
+            blog.MetaTitle.Italian = request.MetaTitle.Italian ?? blog.MetaTitle.Italian;
+            blog.MetaTitle.Russian = request.MetaTitle.Russian ?? blog.MetaTitle.Russian;
+        }
 
         if (request.MetaDescription != null)
-            blog.MetaDescription = request.MetaDescription;
+        {
+            blog.MetaDescription.English = request.MetaDescription.English ?? blog.MetaDescription.English;
+            blog.MetaDescription.Arabic = request.MetaDescription.Arabic ?? blog.MetaDescription.Arabic;
+            blog.MetaDescription.Italian = request.MetaDescription.Italian ?? blog.MetaDescription.Italian;
+            blog.MetaDescription.Russian = request.MetaDescription.Russian ?? blog.MetaDescription.Russian;
+        }
 
         if (request.CategoryId.HasValue)
         {
             var category = await _categoryRepository.GetByIdAsync(request.CategoryId.Value, cancellationToken);
             if (category == null || !category.IsActive)
-                return Result.Failure("Category.NotFound","Category not found or is inactive",404);
+                return Result.Failure("Category.NotFound", "Category not found or is inactive", 404);
 
             blog.CategoryId = request.CategoryId.Value;
         }

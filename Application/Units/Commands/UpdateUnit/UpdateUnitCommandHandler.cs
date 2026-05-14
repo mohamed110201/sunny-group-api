@@ -50,10 +50,20 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
             unit.Area = request.Area.Value;
 
         if (request.MetaTitle != null)
-            unit.MetaTitle = request.MetaTitle;
+        {
+            unit.MetaTitle.English = request.MetaTitle.English ?? unit.MetaTitle.English;
+            unit.MetaTitle.Arabic = request.MetaTitle.Arabic ?? unit.MetaTitle.Arabic;
+            unit.MetaTitle.Italian = request.MetaTitle.Italian ?? unit.MetaTitle.Italian;
+            unit.MetaTitle.Russian = request.MetaTitle.Russian ?? unit.MetaTitle.Russian;
+        }
 
         if (request.MetaDescription != null)
-            unit.MetaDescription = request.MetaDescription;
+        {
+            unit.MetaDescription.English = request.MetaDescription.English ?? unit.MetaDescription.English;
+            unit.MetaDescription.Arabic = request.MetaDescription.Arabic ?? unit.MetaDescription.Arabic;
+            unit.MetaDescription.Italian = request.MetaDescription.Italian ?? unit.MetaDescription.Italian;
+            unit.MetaDescription.Russian = request.MetaDescription.Russian ?? unit.MetaDescription.Russian;
+        }
 
         if (request.Rooms.HasValue)
             unit.Rooms = request.Rooms.Value;

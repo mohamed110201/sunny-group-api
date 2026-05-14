@@ -37,13 +37,21 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
             content.Property(c => c.Russian).HasColumnName("content_ru");
         });
 
-        builder.Property(b => b.MetaTitle)
-            .IsRequired()
-            .HasMaxLength(200);
+        builder.OwnsOne(b => b.MetaTitle, meta =>
+        {
+            meta.Property(m => m.English).HasColumnName("meta_title_en").IsRequired();
+            meta.Property(m => m.Arabic).HasColumnName("meta_title_ar");
+            meta.Property(m => m.Italian).HasColumnName("meta_title_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_title_ru");
+        });
 
-        builder.Property(b => b.MetaDescription)
-            .IsRequired()
-            .HasMaxLength(500);
+        builder.OwnsOne(b => b.MetaDescription, meta =>
+        {
+            meta.Property(m => m.English).HasColumnName("meta_description_en").IsRequired();
+            meta.Property(m => m.Arabic).HasColumnName("meta_description_ar");
+            meta.Property(m => m.Italian).HasColumnName("meta_description_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_description_ru");
+        });
 
         builder.Property(b => b.CategoryId)
             .IsRequired();

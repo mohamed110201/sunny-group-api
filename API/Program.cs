@@ -1,9 +1,13 @@
 using System.Text.Json.Serialization;
+using API.Common;
 using API.Filters;
 using API.Middleware;
 using Application;
 using infrastructure;
+using infrastructure.Persistence;
+using Infrastructure.Persistence.Seeders;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<CookieHelper>();
 
 builder.Services.AddOpenApi();
 {
@@ -48,7 +53,8 @@ var app = builder.Build();
 
  if (!Directory.Exists(mediaPath))
      Directory.CreateDirectory(mediaPath);
-
+ app.UseAuthentication();
+ app.UseAuthorization();
  app.UseStaticFiles(new StaticFileOptions
  {
      FileProvider = new PhysicalFileProvider(mediaPath),
@@ -58,7 +64,12 @@ var app = builder.Build();
 app.UseForwardedHeaders();
 if (!app.Environment.IsDevelopment())
     app.UseMiddleware<ExceptionHandlingMiddleware>();
-
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+    await AdminSeeder.SeedAsync(context);
+}
 //app.UseHttpsRedirection();
 
 var summaries = new[]
@@ -78,6 +89,7 @@ app.MapGet("/weatherforecast", (IConfiguration config) =>
         });
     })
     .WithName("GetWeatherForecast");
+
 app.MapControllers();
 app.Run();
 

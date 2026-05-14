@@ -11,7 +11,7 @@ public class UpdateBlogCommand : IRequest<Result>
     public LocalizedText? Title { get; set; }
     public LocalizedText? Description { get; set; }
     public LocalizedText? Content { get; set; }
-    public string? MetaTitle { get; set; }
-    public string? MetaDescription { get; set; }
+    public LocalizedText? MetaTitle { get; set; }
+    public LocalizedText? MetaDescription { get; set; }
     public int? CategoryId { get; set; }
 }

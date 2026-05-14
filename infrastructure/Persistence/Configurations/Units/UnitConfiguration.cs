@@ -29,6 +29,22 @@ public class UnitConfiguration : IEntityTypeConfiguration<Unit>
             plan.Property(p => p.Russian).HasColumnName("payment_plan_ru");
         });
 
+        builder.OwnsOne(u => u.MetaTitle, meta =>
+        {
+            meta.Property(m => m.English).HasColumnName("meta_title_en").IsRequired();
+            meta.Property(m => m.Arabic).HasColumnName("meta_title_ar");
+            meta.Property(m => m.Italian).HasColumnName("meta_title_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_title_ru");
+        });
+
+        builder.OwnsOne(u => u.MetaDescription, meta =>
+        {
+            meta.Property(m => m.English).HasColumnName("meta_description_en");
+            meta.Property(m => m.Arabic).HasColumnName("meta_description_ar");
+            meta.Property(m => m.Italian).HasColumnName("meta_description_it");
+            meta.Property(m => m.Russian).HasColumnName("meta_description_ru");
+        });
+
         builder.Property(u => u.Area)
             .IsRequired();
 

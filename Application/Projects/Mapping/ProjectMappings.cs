@@ -28,6 +28,10 @@ public static class ProjectMappings
             .Where(m => m.Category == MediaCategory.Cover)
             .Select(m => m.ToDto())
             .FirstOrDefault()!,
+        Icon = project.Media
+            .Where(m => m.Category == MediaCategory.Icon)
+            .Select(m => m.ToDto())
+            .FirstOrDefault()!,
     };
 
     public static GetProjectByIdDto ToGetByIdDto(this Project project) => new()
@@ -46,11 +50,19 @@ public static class ProjectMappings
         Status = StatusTranslations.GetTranslation(project.Status),
         Types = project.Types.Select(t => ProjectTypeTranslations.GetTranslation(t)).ToList(),
         PriceRange = project.PriceRange,
+        CoverImage = project.Media
+            .Where(m => m.Category == MediaCategory.Cover)
+            .Select(m => m.ToDto())
+            .FirstOrDefault()!,
+        Icon = project.Media
+            .Where(m => m.Category == MediaCategory.Icon)
+            .Select(m => m.ToDto())
+            .FirstOrDefault()!,
         Media = project.Media.Select(m => m.ToDto()).ToList(),
         Attractions = project.Attractions
             .Select(a => a.ToDto())
             .ToList(),
-        Units = project.Units.Select(u=>u.ToGetAllDto()).ToList(),
+        Units = project.Units.Select(u => u.ToGetAllDto()).ToList(),
         Documents = project.Documents.Select(d => d.ToDto()).ToList()
     };
 
@@ -69,8 +81,8 @@ public static class ProjectMappings
     };
     private static ProjectDocumentResponseDto ToDto(this ProjectDocument document) => new()
     {
-            Id = document.Id,
-            Url = document.Url,
-            Category = document.Category
+        Id = document.Id,
+        Url = document.Url,
+        Category = document.Category
     };
 }

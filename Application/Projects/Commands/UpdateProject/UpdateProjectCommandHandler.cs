@@ -43,10 +43,20 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
         }
 
         if (request.MetaTitle != null)
-            project.MetaTitle = request.MetaTitle;
+        {
+            project.MetaTitle.Arabic = request.MetaTitle.Arabic ?? project.MetaTitle.Arabic;
+            project.MetaTitle.English = request.MetaTitle.English ?? project.MetaTitle.English;
+            project.MetaTitle.Italian = request.MetaTitle.Italian ?? project.MetaTitle.Italian;
+            project.MetaTitle.Russian = request.MetaTitle.Russian ?? project.MetaTitle.Russian;
+        }
 
         if (request.MetaDescription != null)
-            project.MetaDescription = request.MetaDescription;
+        {
+            project.MetaDescription.Arabic = request.MetaDescription.Arabic ?? project.MetaDescription.Arabic;
+            project.MetaDescription.English = request.MetaDescription.English ?? project.MetaDescription.English;
+            project.MetaDescription.Italian = request.MetaDescription.Italian ?? project.MetaDescription.Italian;
+            project.MetaDescription.Russian = request.MetaDescription.Russian ?? project.MetaDescription.Russian;
+        }
 
         if (request.Location != null)
         {
