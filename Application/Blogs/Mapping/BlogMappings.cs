@@ -11,6 +11,8 @@ public static class BlogMappings
         Id = blog.Id,
         Title = blog.Title,
         Description = blog.Description,
+        MetaTitle =  blog.MetaTitle,
+        MetaDescription = blog.MetaDescription,
         Category = blog.Category.Name,
         CreatedAt = blog.CreatedAt,
         Cover = blog.Media
