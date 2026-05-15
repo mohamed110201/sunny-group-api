@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using API.Common;
+using API.Common.Helpers;
 using API.Filters;
 using API.Middleware;
 using Application;
@@ -62,8 +63,8 @@ var app = builder.Build();
  });
 
 app.UseForwardedHeaders();
-//if (!app.Environment.IsDevelopment())
-    //app.UseMiddleware<ExceptionHandlingMiddleware>();
+if (!app.Environment.IsDevelopment())
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();

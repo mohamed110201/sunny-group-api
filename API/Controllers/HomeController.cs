@@ -6,10 +6,12 @@ using Application.Home.Commands.UpdateSettings;
 using Application.Home.Commands.UpdateVoiceOfCustomer;
 using Application.Home.Queries.GetHome;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class HomeController : BaseController
 {
     private readonly IMediator _mediator;
@@ -20,6 +22,7 @@ public class HomeController : BaseController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetHomeQuery(), cancellationToken);

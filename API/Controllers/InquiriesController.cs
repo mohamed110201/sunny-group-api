@@ -3,10 +3,12 @@ using Application.Inquiries.Commands.CreateInquiry;
 using Application.Inquiries.Commands.MarkInquiryAsSeen;
 using Application.Inquiries.Queries.GetAllInquiries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class InquiriesController : BaseController
 {
     private readonly IMediator _mediator;
@@ -24,12 +26,13 @@ public class InquiriesController : BaseController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Create(
         [FromBody] CreateInquiryCommand command,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return HandleResult(result,created:true);    
+        return HandleResult(result, created: true);
     }
 
     [HttpPatch("{id}/seen")]

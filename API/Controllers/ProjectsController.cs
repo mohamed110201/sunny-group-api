@@ -14,10 +14,12 @@ using Application.Projects.Dtos;
 using Application.Projects.Queries.GetProjectById;
 using Application.Projects.Queries.GetProjects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class ProjectsController : BaseController
 {
     private readonly IMediator _mediator;
@@ -28,6 +30,7 @@ public class ProjectsController : BaseController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetAllProjectsQuery(), cancellationToken);
@@ -35,6 +38,7 @@ public class ProjectsController : BaseController
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetProjectByIdQuery(id), cancellationToken);

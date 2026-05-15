@@ -11,10 +11,12 @@ using Application.Blogs.Queries.GetAllBlogs;
 using Application.Blogs.Queries.GetAllBlogCategories;
 using Application.Blogs.Queries.GetBlogById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class BlogsController : BaseController
 {
     private readonly IMediator _mediator;
@@ -27,12 +29,12 @@ public class BlogsController : BaseController
     #region Categories
 
     [HttpGet("categories")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllCategories(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetAllBlogCategoriesQuery(), cancellationToken);
         return HandleResult(result);
     }
-    
 
     [HttpPost("categories")]
     public async Task<IActionResult> CreateCategory(
@@ -64,6 +66,7 @@ public class BlogsController : BaseController
     #endregion
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetAllBlogsQuery(), cancellationToken);
@@ -71,6 +74,7 @@ public class BlogsController : BaseController
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetBlogByIdQuery(id), cancellationToken);

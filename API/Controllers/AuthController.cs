@@ -1,4 +1,5 @@
 using API.Common;
+using API.Common.Helpers;
 using API.Common.JSend;
 using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Logout;

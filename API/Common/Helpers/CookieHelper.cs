@@ -1,7 +1,7 @@
 using Application.Common.Options;
 using Microsoft.Extensions.Options;
 
-namespace API.Common;
+namespace API.Common.Helpers;
 
 public class CookieHelper
 {
@@ -19,7 +19,7 @@ public class CookieHelper
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.None,
-            Expires = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpiryDays)
+            Expires = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpiryDays).ToLocalTime()
         });
     }
 

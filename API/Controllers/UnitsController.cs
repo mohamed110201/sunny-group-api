@@ -6,6 +6,7 @@ using Application.Units.Commands.UpdateUnit;
 using Application.Units.Queries.GetUnitById;
 using Application.Units.Queries.GetUnitsByProjectId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
 using API.Common.JSend;
@@ -16,6 +17,7 @@ using Application.Units.Queries.GetAllUnits;
 
 namespace API.Controllers;
 
+[Authorize]
 [Route("projects/{projectId}/units")]
 public class UnitsController : BaseController
 {
@@ -26,6 +28,7 @@ public class UnitsController : BaseController
         _mediator = mediator;
     }
     [HttpGet("/units")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetAllUnitsQuery(), cancellationToken);
@@ -33,6 +36,7 @@ public class UnitsController : BaseController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllByProjectId(int projectId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetUnitsByProjectIdQuery(projectId), cancellationToken);
@@ -40,6 +44,7 @@ public class UnitsController : BaseController
     }
 
     [HttpGet("{unitId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(int projectId, int unitId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetUnitByIdQuery(projectId, unitId), cancellationToken);
