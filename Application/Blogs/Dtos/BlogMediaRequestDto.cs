@@ -5,6 +5,6 @@ namespace Application.Blogs.Dtos;
 
 public class BlogMediaRequestDto
 {
-    public IFormFile Image { get; set; } = null!;
+    public IFormFile File { get; set; } = null!;
     public MediaCategory Category { get; set; }
 }

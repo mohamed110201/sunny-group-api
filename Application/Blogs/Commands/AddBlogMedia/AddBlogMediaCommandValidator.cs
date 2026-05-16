@@ -10,25 +10,42 @@ public class AddBlogMediaCommandValidator : AbstractValidator<AddBlogMediaComman
     public AddBlogMediaCommandValidator(IOptions<MediaValidationOptions> options)
     {
         var settings = options.Value;
-        var maxSizeBytes = settings.MaxImageSizeMb * 1024 * 1024;
+        var maxImageBytes = settings.MaxImageSizeMb * 1024 * 1024;
+        var maxVideoBytes = settings.MaxVideoSizeMb * 1024 * 1024;
+        var allowedTypes = settings.AllowedImageTypes
+            .Concat(settings.AllowedVideoTypes)
+            .ToArray();
 
-        RuleFor(x => x.BlogId).GreaterThan(0).WithMessage("Invalid blog id");
+        RuleFor(x => x.BlogId)
+            .GreaterThan(0).WithMessage("Invalid blog id");
 
-        RuleFor(x => x.Images)
-            .Must(images => images.Count <= settings.MaxImagesPerUpload)
-            .WithMessage($"Maximum {settings.MaxImagesPerUpload} images allowed");
+        // validate the list itself
+        RuleFor(x => x.Media)
+            .NotEmpty().WithMessage("At least one file is required")
+            .Must(media => media.Count <= settings.MaxImagesPerUpload)
+            .WithMessage($"Maximum {settings.MaxImagesPerUpload} files allowed");
 
-        RuleForEach(x => x.Images)
+        // validate each item in the list
+        RuleForEach(x => x.Media)
             .ChildRules(item =>
             {
                 item.RuleFor(x => x.Category)
                     .IsInEnum().WithMessage("Invalid media category");
 
-                item.RuleFor(x => x.Image)
-                    .Must(f => f.Length <= maxSizeBytes)
-                    .WithMessage($"Image must not exceed {settings.MaxImageSizeMb}MB")
-                    .Must(f => settings.AllowedImageTypes.Contains(f.ContentType.ToLower()))
-                    .WithMessage($"Allowed types: {string.Join(", ", settings.AllowedImageTypes)}");
+                item.RuleFor(x => x.File)
+                    .NotNull().WithMessage("File is required")
+                    .Must(f => f.Length > 0).WithMessage("File is empty")
+                    .Must(f => allowedTypes.Contains(f.ContentType.ToLower()))
+                    .WithMessage($"Allowed types: {string.Join(", ", allowedTypes)}")
+                    .Must(f =>
+                    {
+                        if (settings.AllowedImageTypes.Contains(f.ContentType.ToLower()))
+                            return f.Length <= maxImageBytes;
+                        if (settings.AllowedVideoTypes.Contains(f.ContentType.ToLower()))
+                            return f.Length <= maxVideoBytes;
+                        return false;
+                    })
+                    .WithMessage($"Image must not exceed {settings.MaxImageSizeMb}MB, video must not exceed {settings.MaxVideoSizeMb}MB");
             });
     }
 }

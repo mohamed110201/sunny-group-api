@@ -32,7 +32,7 @@ public class AddBlogMediaCommandHandler : IRequestHandler<AddBlogMediaCommand, R
         if (blog is null)
             return Result.Failure("Blog.NotFound", "Blog not found", 404);
 
-        var incomingCovers = request.Images.Count(i => i.Category == MediaCategory.Cover);
+        var incomingCovers = request.Media.Count(i => i.Category == MediaCategory.Cover);
 
         if (incomingCovers > 1)
             return Result.Failure("Media.InvalidCover", "Only one cover image is allowed", 400);
@@ -40,10 +40,10 @@ public class AddBlogMediaCommandHandler : IRequestHandler<AddBlogMediaCommand, R
         if (incomingCovers == 1 && blog.Media.Any(m => m.Category == MediaCategory.Cover))
             return Result.Failure("Media.CoverExists", "Blog already has a cover image. Delete it first", 400);
 
-        foreach (var item in request.Images)
+        foreach (var item in request.Media)
         {
             var url = await _mediaStorage.SaveAsync(
-                item.Image,
+                item.File,
                 $"blogs/{blog.Id}/{item.Category.ToString().ToLower()}",
                 cancellationToken);
 
