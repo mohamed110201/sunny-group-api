@@ -19,13 +19,11 @@ public class AddBlogMediaCommandValidator : AbstractValidator<AddBlogMediaComman
         RuleFor(x => x.BlogId)
             .GreaterThan(0).WithMessage("Invalid blog id");
 
-        // validate the list itself
         RuleFor(x => x.Media)
             .NotEmpty().WithMessage("At least one file is required")
             .Must(media => media.Count <= settings.MaxImagesPerUpload)
             .WithMessage($"Maximum {settings.MaxImagesPerUpload} files allowed");
 
-        // validate each item in the list
         RuleForEach(x => x.Media)
             .ChildRules(item =>
             {
