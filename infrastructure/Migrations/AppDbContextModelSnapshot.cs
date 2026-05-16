@@ -175,6 +175,9 @@ namespace infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 

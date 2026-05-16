@@ -10,6 +10,7 @@ public static class HomeMapping
         Id =  v.Id,
         CustomerName = v.CustomerName,
         ProjectName = v.Project.Name,
-        Comment = v.Comment
+        Comment = v.Comment,
+        ImageUrl = v.ImageUrl
     };
 }

@@ -1,4 +1,5 @@
 using Application.Common;
+using Application.Common.Interfaces;
 using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,15 +10,21 @@ public class UpdateVoiceOfCustomerCommandHandler : IRequestHandler<UpdateVoiceOf
 {
     private readonly IVoiceOfCustomerRepository _voiceOfCustomerRepository;
     private readonly IProjectRepository _projectRepository;
+    private readonly IMediaStorageService _mediaStorage;
+
     private readonly IMemoryCache _cache;
 
     public UpdateVoiceOfCustomerCommandHandler(
         IVoiceOfCustomerRepository voiceOfCustomerRepository,
         IProjectRepository projectRepository,
+        IMediaStorageService mediaStorage,
+
         IMemoryCache cache)
     {
         _voiceOfCustomerRepository = voiceOfCustomerRepository;
         _projectRepository = projectRepository;
+        _mediaStorage = mediaStorage;
+
         _cache = cache;
     }
 
@@ -52,7 +59,22 @@ public class UpdateVoiceOfCustomerCommandHandler : IRequestHandler<UpdateVoiceOf
             voiceOfCustomer.Comment.Italian = request.Comment.Italian ?? voiceOfCustomer.Comment.Italian;
             voiceOfCustomer.Comment.Russian = request.Comment.Russian ?? voiceOfCustomer.Comment.Russian;
         }
+        if (request.RemoveImage)
+        {
+            if (!string.IsNullOrEmpty(voiceOfCustomer.ImageUrl))
+                await _mediaStorage.DeleteAsync(voiceOfCustomer.ImageUrl, cancellationToken);
+            voiceOfCustomer.ImageUrl = null;
+        }
+        else if (request.Image != null)
+        {
+            if (!string.IsNullOrEmpty(voiceOfCustomer.ImageUrl))
+                await _mediaStorage.DeleteAsync(voiceOfCustomer.ImageUrl, cancellationToken);
 
+            voiceOfCustomer.ImageUrl = await _mediaStorage.SaveAsync(
+                request.Image,
+                "voice-of-customers",
+                cancellationToken);
+        }
         await _voiceOfCustomerRepository.UpdateAsync(voiceOfCustomer, cancellationToken);
         _cache.Remove("home");
 

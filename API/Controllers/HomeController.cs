@@ -49,8 +49,9 @@ public class HomeController : BaseController
     }
 
     [HttpPost("voice-of-customers")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> CreateVoiceOfCustomer(
-        [FromBody] CreateVoiceOfCustomerCommand command,
+        [FromForm] CreateVoiceOfCustomerCommand command,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -58,9 +59,10 @@ public class HomeController : BaseController
     }
 
     [HttpPatch("voice-of-customers/{id}")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> UpdateVoiceOfCustomer(
         int id,
-        [FromBody] UpdateVoiceOfCustomerCommand command,
+        [FromForm] UpdateVoiceOfCustomerCommand command,
         CancellationToken cancellationToken)
     {
         command.Id = id;

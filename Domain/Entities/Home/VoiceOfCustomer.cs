@@ -10,4 +10,5 @@ public class VoiceOfCustomer
     public int ProjectId { get; set; }
     public LocalizedText Comment { get; set; } = null!;
     public Project Project { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 }

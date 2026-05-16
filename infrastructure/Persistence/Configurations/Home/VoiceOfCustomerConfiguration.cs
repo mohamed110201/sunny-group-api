@@ -26,6 +26,7 @@ public class VoiceOfCustomerConfiguration : IEntityTypeConfiguration<VoiceOfCust
             .WithMany()
             .HasForeignKey(v => v.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
+        builder.Property(v => v.ImageUrl);
 
         builder.ToTable("VoiceOfCustomers");
     }

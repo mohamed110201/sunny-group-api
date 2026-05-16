@@ -8,4 +8,5 @@ public class VoiceOfCustomerDto
     public string CustomerName { get; set; } = string.Empty;
     public LocalizedText ProjectName { get; set; } = null!;
     public LocalizedText Comment { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 }
