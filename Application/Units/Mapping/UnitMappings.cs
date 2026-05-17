@@ -17,7 +17,8 @@ public static class UnitMappings
         MetaTitle = unit.MetaTitle,
         MetaDescription = unit.MetaDescription,
         Rooms = unit.Rooms,
-        Status = StatusTranslations.GetTranslation(unit.Status),
+        NumberOfBathrooms = unit.NumberOfBathrooms,
+        Status = UnitStatusTranslations.GetTranslation(unit.Status),
         Type = UnitTypeTranslations.GetTranslation(unit.Type),   
         DeliveryCondition = DeliveryConditionTranslations.GetTranslation(unit.DeliveryCondition),
         Price = unit.Price,
@@ -26,7 +27,9 @@ public static class UnitMappings
         CoverImage = unit.Media
             .Where(m => m.Category == MediaCategory.Cover)
             .Select(m => m.ToResponseDto())
-            .FirstOrDefault()
+            .FirstOrDefault(),
+        ProjectIconUrl = unit.Project.Media
+            .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url
     };
 
     public static GetUnitByIdDto ToGetByIdDto(this Unit unit) => new()
@@ -37,7 +40,8 @@ public static class UnitMappings
         MetaTitle = unit.MetaTitle,
         MetaDescription = unit.MetaDescription,
         Rooms = unit.Rooms,
-        Status = StatusTranslations.GetTranslation(unit.Status),
+        NumberOfBathrooms = unit.NumberOfBathrooms,
+        Status = UnitStatusTranslations.GetTranslation(unit.Status),
         Type = UnitTypeTranslations.GetTranslation(unit.Type),
         DeliveryCondition = DeliveryConditionTranslations.GetTranslation(unit.DeliveryCondition),
         Price = unit.Price,
@@ -56,8 +60,9 @@ public static class UnitMappings
             .Where(m => m.Category == MediaCategory.Inventory)
             .Select(m => m.ToResponseDto())
             .ToList(),
-        Documents = unit.Documents.Select(d => d.ToDto()).ToList()
-
+        Documents = unit.Documents.Select(d => d.ToDto()).ToList(),
+        ProjectIconUrl = unit.Project.Media
+        .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url
     };
 
     private static UnitMediaResponseDto ToResponseDto(this UnitMedia media) => new()

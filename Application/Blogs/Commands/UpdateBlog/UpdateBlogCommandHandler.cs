@@ -90,7 +90,8 @@ public class UpdateBlogCommandHandler : IRequestHandler<UpdateBlogCommand, Resul
 
             blog.CategoryId = request.CategoryId.Value;
         }
-
+        if (request.ReadTimeMinutes != null)
+            blog.ReadTimeMinutes = request.ReadTimeMinutes.Value;
         await _blogRepository.UpdateAsync(blog, cancellationToken);
 
         _cache.Remove("blogs-all");

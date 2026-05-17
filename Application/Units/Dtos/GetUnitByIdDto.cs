@@ -11,6 +11,7 @@ public class GetUnitByIdDto
     public LocalizedText MetaTitle { get; set; } = null!;
     public LocalizedText MetaDescription { get; set; } = null!;
     public int Rooms { get; set; }
+    public int NumberOfBathrooms { get; set; }
     public LocalizedText Status { get; set; }
     public LocalizedText Type { get; set; }
     public LocalizedText DeliveryCondition { get; set; }
@@ -23,4 +24,6 @@ public class GetUnitByIdDto
     public List<UnitMediaResponseDto> GalleryImages { get; set; } = [];
     public List<UnitMediaResponseDto> InventoryImages { get; set; } = [];
     public List<UnitDocumentResponseDto> Documents { get; set; } = [];
+    public string? ProjectIconUrl { get; set; }
+
 }

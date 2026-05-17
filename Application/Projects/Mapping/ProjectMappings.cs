@@ -21,7 +21,7 @@ public static class ProjectMappings
         TotalUnits = project.TotalUnits,
         Area = project.Area,
         Location = project.Location,
-        Status = StatusTranslations.GetTranslation(project.Status),
+        Status = ProjectStatusTranslations.GetTranslation(project.Status),
         Types = project.Types.Select(t => ProjectTypeTranslations.GetTranslation(t)).ToList(),
         PriceRange = project.PriceRange,
         CoverImage = project.Media
@@ -47,7 +47,7 @@ public static class ProjectMappings
         TotalUnits = project.TotalUnits,
         Area = project.Area,
         Location = project.Location,
-        Status = StatusTranslations.GetTranslation(project.Status),
+        Status = ProjectStatusTranslations.GetTranslation(project.Status),
         Types = project.Types.Select(t => ProjectTypeTranslations.GetTranslation(t)).ToList(),
         PriceRange = project.PriceRange,
         CoverImage = project.Media

@@ -14,7 +14,9 @@ public class UpdateUnitCommand : IRequest<Result>
     public LocalizedText? MetaTitle { get; set; }
     public LocalizedText? MetaDescription { get; set; }
     public int? Rooms { get; set; }
-    public ProjectStatus? Status { get; set; }
+    public int? NumberOfBathrooms { get; set; }
+
+    public UnitStatus? Status { get; set; }
     public UnitType? Type { get; set; }
     public DeliveryCondition? DeliveryCondition { get; set; }
 

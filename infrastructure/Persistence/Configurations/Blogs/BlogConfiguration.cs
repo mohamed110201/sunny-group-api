@@ -55,6 +55,7 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
 
         builder.Property(b => b.CategoryId)
             .IsRequired();
+        builder.Property(b => b.ReadTimeMinutes).IsRequired();
 
         builder.HasOne(b => b.Category)
             .WithMany(c => c.Blogs)

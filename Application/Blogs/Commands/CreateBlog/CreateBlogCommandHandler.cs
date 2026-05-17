@@ -40,6 +40,7 @@ public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommand, Resul
         {
             Title = request.Title,
             Description = request.Description,
+            ReadTimeMinutes = request.ReadTimeMinutes,
             Content = new LocalizedText
             {
                 English = _sanitizer.Sanitize(request.Content.English),

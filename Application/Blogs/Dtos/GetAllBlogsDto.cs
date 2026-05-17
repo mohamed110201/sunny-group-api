@@ -7,6 +7,8 @@ public class GetAllBlogsDto
     public int Id { get; set; }
     public LocalizedText Title { get; set; } = null!;
     public LocalizedText Description { get; set; } = null!;
+    public int ReadTimeMinutes { get; set; }
+
     public LocalizedText MetaTitle { get; set; } = null!;
     public LocalizedText MetaDescription { get; set; } = null!;
     public LocalizedText Category { get; set; } = null!;

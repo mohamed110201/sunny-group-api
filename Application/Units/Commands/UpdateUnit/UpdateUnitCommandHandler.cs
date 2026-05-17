@@ -67,7 +67,8 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         if (request.Rooms.HasValue)
             unit.Rooms = request.Rooms.Value;
-
+        if (request.NumberOfBathrooms != null)
+            unit.NumberOfBathrooms = request.NumberOfBathrooms.Value;
         if (request.Status.HasValue)
             unit.Status = request.Status.Value;
 

@@ -18,6 +18,7 @@ public class UnitRepository : IUnitRepository
         return await db_context.Units
             .Include(u => u.Media)
             .Include(u => u.Project)
+            .ThenInclude(p => p.Media)
             .ToListAsync(cancellationToken);
     }
     public async Task<List<Unit>> GetByProjectIdAsync(int projectId, CancellationToken cancellationToken = default)
@@ -25,6 +26,8 @@ public class UnitRepository : IUnitRepository
         return await db_context.Units
             .Include(u => u.Media)
             .Include(u=>u.Documents)
+            .Include(u=>u.Project)
+                  .ThenInclude(p => p.Media)
             .Where(u => u.ProjectId == projectId)
             .ToListAsync(cancellationToken);
     }
@@ -34,6 +37,8 @@ public class UnitRepository : IUnitRepository
         return await db_context.Units
             .Include(u => u.Media)
             .Include(u=>u.Documents)
+            .Include(u=>u.Project)
+            .ThenInclude(p => p.Media)
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 

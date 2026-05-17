@@ -12,6 +12,8 @@ public class CreateUnitCommandValidator : AbstractValidator<CreateUnitCommand>
         RuleFor(x => x.MetaDescription.English).MaximumLength(500).When(x => x.MetaDescription?.English != null).WithMessage("Meta description must not exceed 500 characters");
         RuleFor(x => x.Area).GreaterThan(0).WithMessage("Area must be greater than 0");
         RuleFor(x => x.Rooms).GreaterThanOrEqualTo(0).WithMessage("Rooms cannot be negative");
+        RuleFor(x => x.NumberOfBathrooms)
+            .GreaterThanOrEqualTo(0).WithMessage("Number of bathrooms cannot be negative");
         RuleFor(x => x.Status).IsInEnum().WithMessage("Invalid status");
         RuleFor(x => x.DeliveryCondition).IsInEnum().WithMessage("Invalid delivery condition");
 

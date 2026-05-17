@@ -44,6 +44,7 @@ public class UnitConfiguration : IEntityTypeConfiguration<Unit>
             meta.Property(m => m.Italian).HasColumnName("meta_description_it");
             meta.Property(m => m.Russian).HasColumnName("meta_description_ru");
         });
+        builder.Property(u => u.NumberOfBathrooms).IsRequired();
 
         builder.Property(u => u.Area)
             .IsRequired();

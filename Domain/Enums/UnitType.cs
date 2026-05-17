@@ -2,7 +2,12 @@ namespace Domain.Enums;
 
 public enum UnitType
 {
-    Apartment,
-    Villa,
-    Studio
+    Studio,
+    OneBedroom,
+    TwoBedroom,
+    ThreeBedroom,
+    StandaloneVilla,
+    TwinVilla,
+    TownVilla,
+    Duplex
 }

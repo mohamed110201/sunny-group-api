@@ -89,6 +89,9 @@ namespace infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("ReadTimeMinutes")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -311,6 +314,9 @@ namespace infrastructure.Migrations
                     b.Property<string>("DeliveryCondition")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("NumberOfBathrooms")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");

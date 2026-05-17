@@ -2,9 +2,10 @@ namespace Domain.Enums;
 
 public enum ProjectType
 {
-    Apartments,
-    Hotels,
+    Hotel,
+    ResidentialApartments,
+    HotelApartments,
     StandaloneVillas,
-    Studios,
-    LuxuryApartments
+    TownVilla,
+    TwinVilla
 }
