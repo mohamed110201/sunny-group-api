@@ -28,6 +28,16 @@ public class HtmlSanitizerService : IHtmlSanitizerService
         _sanitizer.AllowedAttributes.Add("src");
         _sanitizer.AllowedAttributes.Add("alt");
         _sanitizer.AllowedAttributes.Add("class");
+
+        //temporary changes 
+        _sanitizer.AllowedTags.Add("iframe");
+
+        _sanitizer.AllowedAttributes.Add("src");
+        _sanitizer.AllowedAttributes.Add("width");
+        _sanitizer.AllowedAttributes.Add("height");
+        _sanitizer.AllowedAttributes.Add("frameborder");
+        _sanitizer.AllowedAttributes.Add("allow");
+        _sanitizer.AllowedAttributes.Add("allowfullscreen");
     }
 
     public string Sanitize(string html)
