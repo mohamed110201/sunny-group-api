@@ -7,11 +7,13 @@ using Application.Blogs.Commands.DeleteBlogCategory;
 using Application.Blogs.Commands.DeleteBlogMedia;
 using Application.Blogs.Commands.UpdateBlog;
 using Application.Blogs.Commands.UpdateBlogCategory;
+using Application.Blogs.Commands.UploadBlogContentImage;
 using Application.Blogs.Queries.GetAllBlogs;
 using Application.Blogs.Queries.GetAllBlogCategories;
 using Application.Blogs.Queries.GetBlogById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -82,12 +84,30 @@ public class BlogsController : BaseController
     }
 
     [HttpPost]
+    [AllowAnonymous]
+
     public async Task<IActionResult> Create(
         [FromBody] CreateBlogCommand command,
         CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
         return HandleResult(result, created: true);
+    }
+
+    [HttpPost("content-image")]
+    [AllowAnonymous]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UploadContentImage(
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        var command = new UploadBlogContentImageCommand(file);
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return BadRequest(result.Errors);
+
+        return Ok(new { location = result.Value });
     }
 
     [HttpPatch("{id}")]

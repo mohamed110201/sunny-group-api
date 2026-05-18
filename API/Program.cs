@@ -32,39 +32,52 @@ builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<CookieHelper>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddOpenApi();
 {
     var maxRequestBodySize = builder.Configuration
         .GetValue<long>("UploadSettings:MaxRequestBodySizeInMB");
-    builder.WebHost.ConfigureKestrel(options => { options.Limits.MaxRequestBodySize = maxRequestBodySize* 1024 * 1024; });
-    builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = maxRequestBodySize* 1024 * 1024; });
+    builder.WebHost.ConfigureKestrel(options => { options.Limits.MaxRequestBodySize = maxRequestBodySize * 1024 * 1024; });
+    builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = maxRequestBodySize * 1024 * 1024; });
 }
 
 var app = builder.Build();
 
- if (app.Environment.IsDevelopment())
- {
+if (app.Environment.IsDevelopment())
+{
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Sunny Group API ");
     });
 }
- var mediaPath = builder.Configuration["MediaStorage:BasePath"]!;
+var mediaPath = builder.Configuration["MediaStorage:BasePath"]!;
 
- if (!Directory.Exists(mediaPath))
-     Directory.CreateDirectory(mediaPath);
- app.UseAuthentication();
- app.UseAuthorization();
- app.UseStaticFiles(new StaticFileOptions
- {
-     FileProvider = new PhysicalFileProvider(mediaPath),
-     RequestPath = "/media"
- });
+if (!Directory.Exists(mediaPath))
+    Directory.CreateDirectory(mediaPath);
+
+app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(mediaPath),
+    RequestPath = "/media"
+});
 
 app.UseForwardedHeaders();
 if (!app.Environment.IsDevelopment())
     app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
