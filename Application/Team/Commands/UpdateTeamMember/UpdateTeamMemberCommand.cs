@@ -13,7 +13,9 @@ public class UpdateTeamMemberCommand : IRequest<Result>
     public bool RemoveImage { get; set; } = false;
     public LocalizedText? Position { get; set; }
     public LocalizedText? Department { get; set; }
+    public string? CountryCode { get; set; }
+
     public string? PhoneNumber { get; set; }
     public string? Email { get; set; }
-    public Domain.ValueObjects.SocialLinks? Links { get; set; }
+    public SocialLinks? Links { get; set; }
 }

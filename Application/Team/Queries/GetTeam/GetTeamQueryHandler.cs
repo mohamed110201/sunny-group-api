@@ -24,7 +24,7 @@ public class GetTeamQueryHandler : IRequestHandler<GetTeamQuery, Result<List<Tea
             ImageUrl = i.ImageUrl,
             Position = i.Position,
             Department = i.Department,
-            PhoneNumber = i.PhoneNumber,
+            FullPhoneNumber = i.FullPhoneNumber,
             Email = i.Email,
             Links = i.Links
         }).ToList();

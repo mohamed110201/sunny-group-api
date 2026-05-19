@@ -3,6 +3,7 @@ using Application.Team.Commands.CreateTeamMember;
 using Application.Team.Commands.DeleteTeamMember;
 using Application.Team.Commands.UpdateTeamMember;
 using Application.Team.Queries.GetTeam;
+using Application.Team.Queries.GetTeamMemberById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ public class TeamController : BaseController
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetTeamQuery(), cancellationToken);
+        return HandleResult(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetTeamMemberByIdQuery(id), cancellationToken);
         return HandleResult(result);
     }
 

@@ -27,7 +27,7 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
             return await next();
 
         var errors = failures
-            .Select(f => new Error(f.PropertyName, f.ErrorMessage))
+            .Select(f => new Error(f.ErrorCode ?? f.PropertyName, f.ErrorMessage))
             .ToList();
 
         var resultType = typeof(TResponse);
