@@ -1,0 +1,15 @@
+using Domain.ValueObjects;
+
+namespace Application.Team.Dtos;
+
+public class TeamMemberDto
+{
+    public int Id { get; set; }
+    public LocalizedText Name { get; set; } = new LocalizedText();
+    public string? ImageUrl { get; set; }
+    public LocalizedText Position { get; set; } = new LocalizedText();
+    public LocalizedText Department { get; set; } = new LocalizedText();
+    public string? PhoneNumber { get; set; }
+    public string? Email { get; set; }
+    public SocialLinks Links { get; set; } = new SocialLinks();
+}

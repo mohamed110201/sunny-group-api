@@ -5,6 +5,7 @@ using Domain.Entities.Home;
 using Domain.Entities.inquiries;
 using Domain.Entities.Projects;
 using Domain.Entities.Units;
+using Domain.Entities.Team;
 using Microsoft.EntityFrameworkCore;
 
 namespace infrastructure.Persistence;
@@ -24,6 +25,7 @@ public class AppDbContext : DbContext
     public DbSet<BlogMedia> BlogMedia => Set<BlogMedia>();
     public DbSet<VoiceOfCustomer> VoiceOfCustomers => Set<VoiceOfCustomer>();
     public DbSet<Settings> Settings => Set<Settings>();
+    public DbSet<TeamMember> TeamMembers => Set<TeamMember>();
     public DbSet<ProjectDocument> ProjectDocuments => Set<ProjectDocument>();
     public DbSet<UnitDocument> UnitDocuments => Set<UnitDocument>();
     public DbSet<Admin> Admins => Set<Admin>();

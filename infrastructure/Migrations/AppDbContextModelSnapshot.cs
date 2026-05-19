@@ -300,6 +300,31 @@ namespace infrastructure.Migrations
                     b.ToTable("ProjectMedia");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Team.TeamMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamMembers", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Units.Unit", b =>
                 {
                     b.Property<int>("Id")
@@ -988,6 +1013,161 @@ namespace infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Team.TeamMember", b =>
+                {
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "Department", b1 =>
+                        {
+                            b1.Property<int>("TeamMemberId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("department_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("department_en");
+
+                            b1.Property<string>("Italian")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("department_it");
+
+                            b1.Property<string>("Russian")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("department_ru");
+
+                            b1.HasKey("TeamMemberId");
+
+                            b1.ToTable("TeamMembers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TeamMemberId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "Name", b1 =>
+                        {
+                            b1.Property<int>("TeamMemberId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)")
+                                .HasColumnName("name_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)")
+                                .HasColumnName("name_en");
+
+                            b1.Property<string>("Italian")
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)")
+                                .HasColumnName("name_it");
+
+                            b1.Property<string>("Russian")
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)")
+                                .HasColumnName("name_ru");
+
+                            b1.HasKey("TeamMemberId");
+
+                            b1.ToTable("TeamMembers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TeamMemberId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.LocalizedText", "Position", b1 =>
+                        {
+                            b1.Property<int>("TeamMemberId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Arabic")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("position_ar");
+
+                            b1.Property<string>("English")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("position_en");
+
+                            b1.Property<string>("Italian")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("position_it");
+
+                            b1.Property<string>("Russian")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("position_ru");
+
+                            b1.HasKey("TeamMemberId");
+
+                            b1.ToTable("TeamMembers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TeamMemberId");
+                        });
+
+                    b.OwnsOne("Domain.ValueObjects.SocialLinks", "Links", b1 =>
+                        {
+                            b1.Property<int>("TeamMemberId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Facebook")
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("facebook");
+
+                            b1.Property<string>("Instagram")
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("instagram");
+
+                            b1.Property<string>("LinkedIn")
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("linkedin");
+
+                            b1.Property<string>("Other")
+                                .HasMaxLength(1000)
+                                .HasColumnType("character varying(1000)")
+                                .HasColumnName("other");
+
+                            b1.Property<string>("Youtube")
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("youtube");
+
+                            b1.HasKey("TeamMemberId");
+
+                            b1.ToTable("TeamMembers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TeamMemberId");
+                        });
+
+                    b.Navigation("Department")
+                        .IsRequired();
+
+                    b.Navigation("Links")
+                        .IsRequired();
+
+                    b.Navigation("Name")
+                        .IsRequired();
+
+                    b.Navigation("Position")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Units.Unit", b =>

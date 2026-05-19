@@ -32,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IBlogRepository, BlogRepository>();
         services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
         services.AddScoped<IVoiceOfCustomerRepository, VoiceOfCustomerRepository>();
+        services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
         services.AddScoped<ISettingsRepository, SettingsRepository>();
         services.AddScoped<IHtmlSanitizerService, HtmlSanitizerService>();
         services.AddScoped<IAdminRepository, AdminRepository>();
