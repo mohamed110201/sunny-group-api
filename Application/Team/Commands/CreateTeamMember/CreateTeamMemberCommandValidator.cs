@@ -41,8 +41,8 @@ public class CreateTeamMemberCommandValidator : AbstractValidator<CreateTeamMemb
         When(x => !string.IsNullOrEmpty(x.PhoneNumber), () =>
         {
             RuleFor(x => x.PhoneNumber!)
-                .Matches(@"^01[0-9]{9}$")
-                .WithMessage("Enter a valid phone number");
+                .Matches(@"^(?:01[0-9]{9}|\+[1-9]\d{1,14})$")
+                .WithMessage("Enter A valid phone number");
         });
     }
 }
