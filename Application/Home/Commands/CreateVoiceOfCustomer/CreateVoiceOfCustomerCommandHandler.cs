@@ -48,8 +48,8 @@ public class CreateVoiceOfCustomerCommandHandler : IRequestHandler<CreateVoiceOf
             CustomerName = request.CustomerName,
             ProjectId = request.ProjectId,
             Comment = request.Comment,
-            ImageUrl = imageUrl
-
+            ImageUrl = imageUrl,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _voiceOfCustomerRepository.AddAsync(voiceOfCustomer, cancellationToken);

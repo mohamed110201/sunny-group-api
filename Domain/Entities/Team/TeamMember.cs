@@ -9,10 +9,7 @@ public class TeamMember
     public string? ImageUrl { get; set; }
     public LocalizedText Position { get; set; } = new LocalizedText();
     public LocalizedText Department { get; set; } = new LocalizedText();
-    public string CountryCode { get; set; } = string.Empty;
     public string? PhoneNumber { get; set; }
-    public string FullPhoneNumber => $"{CountryCode}{PhoneNumber}";
-
     public string? Email { get; set; }
     public SocialLinks Links { get; set; } = new SocialLinks();
 }

@@ -42,6 +42,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
             Location = request.Location,
             Status = request.Status,
             Types = request.Types,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _projectRepository.AddAsync(project, cancellationToken);

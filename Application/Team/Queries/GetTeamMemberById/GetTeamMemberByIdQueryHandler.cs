@@ -28,7 +28,7 @@ public class GetTeamMemberByIdQueryHandler : IRequestHandler<GetTeamMemberByIdQu
             ImageUrl = item.ImageUrl,
             Position = item.Position,
             Department = item.Department,
-            FullPhoneNumber = item.FullPhoneNumber,
+            PhoneNumber = item.PhoneNumber,
             Email = item.Email,
             Links = item.Links
         };

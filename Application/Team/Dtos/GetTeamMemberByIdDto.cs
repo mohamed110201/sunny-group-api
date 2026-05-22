@@ -9,7 +9,7 @@ public class GetTeamMemberByIdDto
     public string? ImageUrl { get; set; }
     public LocalizedText Position { get; set; } = new LocalizedText();
     public LocalizedText Department { get; set; } = new LocalizedText();
-    public string FullPhoneNumber { get; set; } = string.Empty;
+    public string? PhoneNumber { get; set; }
 
     public string? Email { get; set; }
     public SocialLinks Links { get; set; } = new SocialLinks();

@@ -101,6 +101,8 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasForeignKey(u => u.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Property(p => p.CreatedAt).IsRequired();
+
         builder.ToTable("Projects");
     }
 }

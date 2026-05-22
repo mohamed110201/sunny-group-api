@@ -86,28 +86,7 @@ using (var scope = app.Services.CreateScope())
 }
 //app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", (IConfiguration config) =>
-    {
-        var connectionString = config.GetConnectionString("Default");
-        var environment = app.Environment.EnvironmentName;
-
-        return Results.Ok(new
-        {
-            Environment = environment,
-            ConnectionString = connectionString
-        });
-    })
-    .WithName("GetWeatherForecast");
 
 app.MapControllers();
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

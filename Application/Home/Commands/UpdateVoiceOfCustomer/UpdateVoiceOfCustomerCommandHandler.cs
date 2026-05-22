@@ -75,6 +75,8 @@ public class UpdateVoiceOfCustomerCommandHandler : IRequestHandler<UpdateVoiceOf
                 "voice-of-customers",
                 cancellationToken);
         }
+
+        voiceOfCustomer.CreatedAt = DateTime.UtcNow;
         await _voiceOfCustomerRepository.UpdateAsync(voiceOfCustomer, cancellationToken);
         _cache.Remove("home");
 

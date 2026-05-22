@@ -11,4 +11,6 @@ public class VoiceOfCustomer
     public LocalizedText Comment { get; set; } = null!;
     public Project Project { get; set; } = null!;
     public string? ImageUrl { get; set; }
+    public DateTime CreatedAt { get; set; }
+
 }

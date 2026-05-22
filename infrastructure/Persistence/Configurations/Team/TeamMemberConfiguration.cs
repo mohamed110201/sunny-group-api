@@ -33,9 +33,7 @@ public class TeamMemberConfiguration : IEntityTypeConfiguration<TeamMember>
             department.Property(d => d.Italian).HasColumnName("department_it").HasMaxLength(100);
             department.Property(d => d.Russian).HasColumnName("department_ru").HasMaxLength(100);
         });
-        builder.Property(i => i.CountryCode)
-            .IsRequired()
-            .HasMaxLength(10);
+
         builder.Property(t => t.PhoneNumber).IsRequired().HasMaxLength(20);
         builder.Property(t => t.Email).HasMaxLength(200);
         builder.Property(t => t.ImageUrl).HasMaxLength(1000);
@@ -48,7 +46,6 @@ public class TeamMemberConfiguration : IEntityTypeConfiguration<TeamMember>
             links.Property(l => l.LinkedIn).HasColumnName("linkedin").HasMaxLength(500);
             links.Property(l => l.Other).HasColumnName("other").HasMaxLength(1000);
         });
-        builder.Ignore(t => t.FullPhoneNumber);
 
         builder.ToTable("TeamMembers");
     }

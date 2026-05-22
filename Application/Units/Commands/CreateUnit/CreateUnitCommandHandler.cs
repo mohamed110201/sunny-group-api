@@ -47,7 +47,9 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
             Price = request.Price,
             Stock = request.Stock,
             PaymentPlan = request.PaymentPlan,
-            ROI = request.ROI
+            ROI = request.ROI,
+            CreatedAt = DateTime.UtcNow
+
         };
 
         await _unitRepository.AddAsync(unit, cancellationToken);

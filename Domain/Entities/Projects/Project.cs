@@ -25,4 +25,6 @@ public class Project
 
     public ICollection<Attraction> Attractions { get; set; } = [];
     public ICollection<Unit> Units { get; set; } = [];
+    public DateTime CreatedAt { get; set; }
+
 }

@@ -87,6 +87,8 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
         if (request.ROI.HasValue)
             unit.ROI = request.ROI.Value;
 
+        unit.CreatedAt = DateTime.UtcNow;
+
         await _unitRepository.UpdateAsync(unit, cancellationToken);
 
         await _projectRepository.UpdatePriceRangeAsync(request.ProjectId, cancellationToken);

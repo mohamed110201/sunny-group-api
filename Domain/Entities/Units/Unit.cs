@@ -25,5 +25,7 @@ public class Unit
     public Project Project { get; set; } = null!;
     public ICollection<UnitMedia> Media { get; set; } = [];
     public ICollection<UnitDocument> Documents { get; set; } = [];
+    public DateTime CreatedAt { get; set; }
+
 
 }

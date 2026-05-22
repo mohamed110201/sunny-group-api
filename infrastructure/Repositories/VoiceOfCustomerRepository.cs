@@ -19,6 +19,7 @@ public class VoiceOfCustomerRepository : IVoiceOfCustomerRepository
     {
         return await _context.VoiceOfCustomers
             .Include(v => v.Project)
+            .OrderByDescending(v => v.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 

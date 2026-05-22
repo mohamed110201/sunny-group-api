@@ -73,6 +73,9 @@ public class UnitConfiguration : IEntityTypeConfiguration<Unit>
             .WithOne(m => m.Unit)
             .HasForeignKey(m => m.UnitId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Property(u => u.CreatedAt).IsRequired();
+
 
         builder.ToTable("Units");
     }

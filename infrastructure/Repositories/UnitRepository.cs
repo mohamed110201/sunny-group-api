@@ -19,6 +19,7 @@ public class UnitRepository : IUnitRepository
             .Include(u => u.Media)
             .Include(u => u.Project)
             .ThenInclude(p => p.Media)
+            .OrderByDescending(u => u.CreatedAt)
             .ToListAsync(cancellationToken);
     }
     public async Task<List<Unit>> GetByProjectIdAsync(int projectId, CancellationToken cancellationToken = default)
@@ -29,6 +30,7 @@ public class UnitRepository : IUnitRepository
             .Include(u=>u.Project)
                   .ThenInclude(p => p.Media)
             .Where(u => u.ProjectId == projectId)
+            .OrderByDescending(u => u.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 

@@ -83,6 +83,8 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
 
         if (request.Types != null)
             project.Types = request.Types;
+        
+        project.CreatedAt = DateTime.UtcNow;
 
         await _projectRepository.UpdateAsync(project, cancellationToken);
         _cache.Remove("projects-all");

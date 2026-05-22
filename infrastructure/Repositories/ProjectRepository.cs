@@ -1,5 +1,6 @@
 using Domain.Entities.Projects;
 using Domain.Interfaces;
+using Domain.ValueObjects;
 using infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ public class ProjectRepository : IProjectRepository
     {
         return await db_context.Projects
             .Include(p => p.Media)
+            .OrderByDescending(p => p.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 
@@ -74,7 +76,7 @@ public class ProjectRepository : IProjectRepository
                 var minPrice = units.Min();
                 var maxPrice = units.Max();
 
-                project.PriceRange = new Domain.ValueObjects.PriceRange
+                project.PriceRange = new PriceRange
                 {
                     Min = minPrice,
                     Max = maxPrice
