@@ -27,6 +27,7 @@ public class GetAllUnitsQueryHandler : IRequestHandler<GetAllUnitsQuery, Result<
             {
                 ProjectId = g.Key.Id,
                 ProjectName = g.Key.Name,
+                ProjectLocation = g.Key.Location,
                 Units = g.Select(u => u.ToGetAllDto()).ToList()
             })
             .ToList();

@@ -6,5 +6,7 @@ public class ProjectUnitsGroupDto
 {
     public int ProjectId { get; set; }
     public LocalizedText ProjectName { get; set; } = null!;
+    public LocalizedText ProjectLocation { get; set; } = null!;
+
     public List<GetAllUnitsDto> Units { get; set; } = [];
 }
