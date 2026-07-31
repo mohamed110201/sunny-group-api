@@ -48,6 +48,11 @@ public static class UnitMappings
         Stock = unit.Stock,
         PaymentPlan = unit.PaymentPlan,
         ROI = unit.ROI,
+        PaidToStartEarn = unit.PaidToStartEarn,
+        MonthlyRent = unit.MonthlyRent,
+        YearsToEarn = unit.YearsToEarn,
+        PaidToStartEarnPercentage = unit.PaidToStartEarnPercentage,
+        AnnualYield = unit.AnnualYield,
         CoverImage = unit.Media
             .Where(m => m.Category == MediaCategory.Cover)
             .Select(m => m.ToResponseDto())

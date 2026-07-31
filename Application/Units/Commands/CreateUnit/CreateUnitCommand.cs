@@ -22,4 +22,7 @@ public class CreateUnitCommand : IRequest<Result<int>>
     public int Stock { get; set; }
     public LocalizedText PaymentPlan { get; set; } = null!;
     public double ROI { get; set; }
+    public decimal PaidToStartEarn { get; set; }
+    public decimal MonthlyRent { get; set; }
+    public int YearsToEarn { get; set; }
 }

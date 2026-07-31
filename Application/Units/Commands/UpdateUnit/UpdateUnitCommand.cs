@@ -24,4 +24,7 @@ public class UpdateUnitCommand : IRequest<Result>
     public int? Stock { get; set; }
     public LocalizedText? PaymentPlan { get; set; }
     public double? ROI { get; set; }
+    public decimal? PaidToStartEarn { get; set; }
+    public decimal? MonthlyRent { get; set; }
+    public int? YearsToEarn { get; set; }
 }

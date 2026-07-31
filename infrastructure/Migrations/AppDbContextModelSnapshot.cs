@@ -233,6 +233,9 @@ namespace infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("MapUrl")
+                        .HasColumnType("text");
+
                     b.Property<int>("NumberOfApartments")
                         .HasColumnType("integer");
 
@@ -350,8 +353,14 @@ namespace infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("MonthlyRent")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("NumberOfBathrooms")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("PaidToStartEarn")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -375,6 +384,9 @@ namespace infrastructure.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("YearsToEarn")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

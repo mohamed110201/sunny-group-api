@@ -48,13 +48,15 @@ public class CreateUnitCommandHandler : IRequestHandler<CreateUnitCommand, Resul
             Stock = request.Stock,
             PaymentPlan = request.PaymentPlan,
             ROI = request.ROI,
+            PaidToStartEarn = request.PaidToStartEarn,
+            MonthlyRent = request.MonthlyRent,
+            YearsToEarn = request.YearsToEarn,
             CreatedAt = DateTime.UtcNow
 
         };
 
         await _unitRepository.AddAsync(unit, cancellationToken);
 
-        // Update project's price range based on all units
         await _projectRepository.UpdatePriceRangeAsync(request.ProjectId, cancellationToken);
 
         _cache.Remove($"units-project-{request.ProjectId}");

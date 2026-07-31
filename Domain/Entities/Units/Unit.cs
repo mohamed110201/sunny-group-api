@@ -25,6 +25,15 @@ public class Unit
     public Project Project { get; set; } = null!;
     public ICollection<UnitMedia> Media { get; set; } = [];
     public ICollection<UnitDocument> Documents { get; set; } = [];
+    public decimal PaidToStartEarn { get; set; }
+    public decimal MonthlyRent { get; set; }
+    public int YearsToEarn { get; set; }
+
+    public decimal PaidToStartEarnPercentage => 
+        Price > 0 ? Math.Round((PaidToStartEarn / Price) * 100, 2) : 0;
+
+    public decimal AnnualYield => 
+        Price > 0 ? Math.Round((MonthlyRent * 12) / Price * 100, 2) : 0;
     public DateTime CreatedAt { get; set; }
 
 

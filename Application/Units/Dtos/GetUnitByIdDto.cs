@@ -20,6 +20,11 @@ public class GetUnitByIdDto
     public int Stock { get; set; }
     public LocalizedText PaymentPlan { get; set; } = null!;
     public double ROI { get; set; }
+    public decimal PaidToStartEarn { get; set; }
+    public decimal MonthlyRent { get; set; }
+    public int YearsToEarn { get; set; }
+    public decimal PaidToStartEarnPercentage { get; set; }
+    public decimal AnnualYield { get; set; }
     public UnitMediaResponseDto? CoverImage { get; set; }
     public List<UnitMediaResponseDto> GalleryImages { get; set; } = [];
     public List<UnitMediaResponseDto> InventoryImages { get; set; } = [];

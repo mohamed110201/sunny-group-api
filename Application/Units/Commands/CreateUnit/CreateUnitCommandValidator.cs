@@ -22,5 +22,13 @@ public class CreateUnitCommandValidator : AbstractValidator<CreateUnitCommand>
         RuleFor(x => x.Stock).GreaterThanOrEqualTo(0).WithMessage("Stock cannot be negative");
         RuleFor(x => x.PaymentPlan.English).NotEmpty().WithMessage("English payment plan is required");
         RuleFor(x => x.ROI).GreaterThanOrEqualTo(0).WithMessage("ROI cannot be negative");
+        RuleFor(x => x.PaidToStartEarn)
+            .GreaterThanOrEqualTo(0).WithMessage("Paid to start earn cannot be negative");
+
+        RuleFor(x => x.MonthlyRent)
+            .GreaterThanOrEqualTo(0).WithMessage("Monthly rent cannot be negative");
+
+        RuleFor(x => x.YearsToEarn)
+            .GreaterThan(0).WithMessage("Years to earn must be greater than 0");
     }
 }

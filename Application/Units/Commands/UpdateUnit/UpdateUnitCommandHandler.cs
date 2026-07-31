@@ -86,6 +86,14 @@ public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand, Resul
 
         if (request.ROI.HasValue)
             unit.ROI = request.ROI.Value;
+        if (request.PaidToStartEarn != null)
+            unit.PaidToStartEarn = request.PaidToStartEarn.Value;
+
+        if (request.MonthlyRent != null)
+            unit.MonthlyRent = request.MonthlyRent.Value;
+
+        if (request.YearsToEarn != null)
+            unit.YearsToEarn = request.YearsToEarn.Value;
 
         unit.CreatedAt = DateTime.UtcNow;
 

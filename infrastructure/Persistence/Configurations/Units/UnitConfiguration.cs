@@ -74,6 +74,18 @@ public class UnitConfiguration : IEntityTypeConfiguration<Unit>
             .HasForeignKey(m => m.UnitId)
             .OnDelete(DeleteBehavior.Cascade);
         
+        builder.Property(u => u.PaidToStartEarn)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(u => u.MonthlyRent)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(u => u.YearsToEarn)
+            .IsRequired();
+
+        builder.Ignore(u => u.PaidToStartEarnPercentage);
+        builder.Ignore(u => u.AnnualYield);
+        
         builder.Property(u => u.CreatedAt).IsRequired();
 
 

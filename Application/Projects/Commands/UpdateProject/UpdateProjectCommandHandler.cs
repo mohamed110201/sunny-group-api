@@ -65,6 +65,8 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand,
             project.Location.Italian = request.Location.Italian ?? project.Location.Italian;
             project.Location.Russian = request.Location.Russian ?? project.Location.Russian;
         }
+        if (request.MapUrl != null)
+            project.MapUrl = request.MapUrl;
 
         if (request.YearOfConstruction.HasValue)
             project.YearOfConstruction = request.YearOfConstruction.Value;

@@ -19,5 +19,8 @@ public class UpdateUnitCommandValidator : AbstractValidator<UpdateUnitCommand>
         RuleFor(x => x.Stock).GreaterThanOrEqualTo(0).When(x => x.Stock.HasValue).WithMessage("Stock cannot be negative");
         RuleFor(x => x.PaymentPlan.English).NotEmpty().When(x => x.PaymentPlan != null).WithMessage("English payment plan is required");
         RuleFor(x => x.ROI).GreaterThanOrEqualTo(0).When(x => x.ROI.HasValue).WithMessage("ROI cannot be negative");
+        RuleFor(x => x.PaidToStartEarn).GreaterThanOrEqualTo(0).When(x => x.PaidToStartEarn.HasValue).WithMessage("Paid to start earn cannot be negative");
+        RuleFor(x => x.MonthlyRent).GreaterThanOrEqualTo(0).When(x => x.MonthlyRent.HasValue).WithMessage("Monthly rent cannot be negative");
+        RuleFor(x => x.YearsToEarn).GreaterThan(0).When(x => x.YearsToEarn.HasValue).WithMessage("Years to earn must be greater than 0");
     }
 }

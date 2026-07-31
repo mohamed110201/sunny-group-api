@@ -7,10 +7,46 @@ public static class UnitStatusTranslations
 {
     private static readonly Dictionary<UnitStatus, LocalizedText> _translations = new()
     {
-        { UnitStatus.ReadyToMove, new LocalizedText { English = "Ready to Move", Arabic = "جاهز للسكن", Italian = "Pronto per Trasferirsi", Russian = "Готов к заселению" } },
-        { UnitStatus.UnderFinishing, new LocalizedText { English = "Under Finishing", Arabic = "قيد التشطيب", Italian = "In Finitura", Russian = "В отделке" } },
-        { UnitStatus.UnderConstruction, new LocalizedText { English = "Under Construction", Arabic = "قيد الإنشاء", Italian = "In Costruzione", Russian = "В строительстве" } },
-        { UnitStatus.DeliverySoon, new LocalizedText { English = "Delivery Soon", Arabic = "التسليم قريباً", Italian = "Consegna Imminente", Russian = "Скоро доставка" } }
+        {
+            UnitStatus.FullyFinished,
+            new LocalizedText
+            {
+                English = "Fully Finished",
+                Arabic = "تشطيب كامل",
+                Italian = "Completamente Rifinito",
+                Russian = "Полностью отделан"
+            }
+        },
+        {
+            UnitStatus.Unfinished,
+            new LocalizedText
+            {
+                English = "Unfinished",
+                Arabic = "غير مشطب",
+                Italian = "Non Rifinito",
+                Russian = "Без отделки"
+            }
+        },
+        {
+            UnitStatus.HalfFinished,
+            new LocalizedText
+            {
+                English = "Half Finished",
+                Arabic = "نصف تشطيب",
+                Italian = "Parzialmente Rifinito",
+                Russian = "Частично отделан"
+            }
+        },
+        {
+            UnitStatus.FullyFurnished,
+            new LocalizedText
+            {
+                English = "Fully Furnished",
+                Arabic = "مفروش بالكامل",
+                Italian = "Completamente Arredato",
+                Russian = "Полностью меблирован"
+            }
+        },
     };
 
     public static LocalizedText GetTranslation(UnitStatus status)
