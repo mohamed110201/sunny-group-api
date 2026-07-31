@@ -17,6 +17,7 @@ public class Project
     public int TotalUnits => NumberOfVillas + NumberOfApartments;
     public double Area { get; set; }
     public LocalizedText Location { get; set; } = null!;
+    public string? MapUrl { get; set; }
     public ProjectStatus Status { get; set; }
     public List<ProjectType> Types { get; set; } = [];
     public PriceRange? PriceRange { get; set; }

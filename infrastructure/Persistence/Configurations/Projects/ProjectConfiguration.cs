@@ -37,6 +37,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             price.Property(pr => pr.Min).HasColumnName("price_min").HasColumnType("decimal(18,2)");
             price.Property(pr => pr.Max).HasColumnName("price_max").HasColumnType("decimal(18,2)");
         });
+        builder.Property(p => p.MapUrl);
 
         builder.OwnsOne(p => p.Location, loc =>
         {

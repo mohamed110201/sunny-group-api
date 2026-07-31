@@ -17,6 +17,7 @@ public class GetProjectByIdDto
     public int TotalUnits { get; set; }
     public double Area { get; set; }
     public LocalizedText Location { get; set; } = null!;
+    public string? MapUrl { get; set; }
     public LocalizedText Status { get; set; }
     public List<LocalizedText> Types { get; set; } = [];
     public PriceRange? PriceRange { get; set; }

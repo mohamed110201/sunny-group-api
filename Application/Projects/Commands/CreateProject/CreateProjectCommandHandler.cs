@@ -40,6 +40,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
             NumberOfApartments = request.NumberOfApartments,
             Area = request.Area,
             Location = request.Location,
+            MapUrl = request.MapUrl,
             Status = request.Status,
             Types = request.Types,
             CreatedAt = DateTime.UtcNow

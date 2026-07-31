@@ -18,6 +18,7 @@ public class CreateProjectCommand : IRequest<Result<int>>
     public int NumberOfApartments { get; set; }
     public double Area { get; set; }
     public LocalizedText Location { get; set; } = null!;
+    public string? MapUrl { get; set; }
     public ProjectStatus Status { get; set; }
     public List<ProjectType> Types { get; set; } = [];
 }
