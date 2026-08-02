@@ -2,8 +2,8 @@ namespace Domain.Enums;
 
 public enum UnitStatus
 {
-    FullyFinished,
-    Unfinished,
-    HalfFinished,
-    FullyFurnished
+    ReadyToMove,
+    UnderFinishing,
+    UnderConstruction,
+    DeliverySoon
 }
