@@ -21,5 +21,7 @@ public class GetAllUnitsDto
     public double ROI { get; set; }
     public UnitMediaResponseDto? CoverImage { get; set; }
     public string? ProjectIconUrl { get; set; }
+    public string? ProjectMapUrl { get; set; }
+
 
 }

@@ -29,7 +29,8 @@ public static class UnitMappings
             .Select(m => m.ToResponseDto())
             .FirstOrDefault(),
         ProjectIconUrl = unit.Project.Media
-            .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url
+            .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url,
+        ProjectMapUrl = unit.Project.MapUrl
     };
 
     public static GetUnitByIdDto ToGetByIdDto(this Unit unit) => new()
@@ -67,7 +68,8 @@ public static class UnitMappings
             .ToList(),
         Documents = unit.Documents.Select(d => d.ToDto()).ToList(),
         ProjectIconUrl = unit.Project.Media
-        .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url
+        .FirstOrDefault(m => m.Category == MediaCategory.Icon)?.Url,
+        ProjectMapUrl = unit.Project.MapUrl
     };
 
     private static UnitMediaResponseDto ToResponseDto(this UnitMedia media) => new()

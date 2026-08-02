@@ -30,5 +30,6 @@ public class GetUnitByIdDto
     public List<UnitMediaResponseDto> InventoryImages { get; set; } = [];
     public List<UnitDocumentResponseDto> Documents { get; set; } = [];
     public string? ProjectIconUrl { get; set; }
+    public string? ProjectMapUrl { get; set; }
 
 }
