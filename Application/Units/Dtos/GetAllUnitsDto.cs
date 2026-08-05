@@ -19,6 +19,8 @@ public class GetAllUnitsDto
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public double ROI { get; set; }
+    public decimal PaidToStartEarnPercentage { get; set; }
+    public decimal AnnualYield { get; set; }
     public UnitMediaResponseDto? CoverImage { get; set; }
     public string? ProjectIconUrl { get; set; }
     public string? ProjectMapUrl { get; set; }

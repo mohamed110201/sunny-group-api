@@ -24,6 +24,8 @@ public static class UnitMappings
         Price = unit.Price,
         Stock = unit.Stock,
         ROI = unit.ROI,
+        PaidToStartEarnPercentage = unit.PaidToStartEarnPercentage,
+        AnnualYield = unit.AnnualYield,
         CoverImage = unit.Media
             .Where(m => m.Category == MediaCategory.Cover)
             .Select(m => m.ToResponseDto())
